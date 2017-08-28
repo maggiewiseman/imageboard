@@ -21,35 +21,36 @@
 
     });
 
-    var myBoard = new BoardModel();
-myBoard.on('change', function() {
-        console.log('change event happened');
-        //view.render();
-        console.log(myBoard.get('images'));
+//     var myBoard = new BoardModel();
+// myBoard.on('change', function() {
+//         console.log('change event happened');
+//         view.render();
+//         console.log(myBoard.get('images'));
+//     });
+    var BoardView = Backbone.View.extend({
+        initialize: function() {
+            console.log('initializing view');
+            var view = this;
+            this.model.on('change', function() {
+                console.log('change event happened');
+                view.render();
+                console.log(this.model);
+            });
+
+        },
+        render: function() {
+            console.log('views render function called');
+            var data = this.model.toJSON();
+            var html = Handlebars.templates.imageBoard(data);
+            console.log(html);
+            this.$el.html(html);
+        }
     });
-    // var BoardView = Backbone.View.extend({
-    //     initialize: function() {
-    //         console.log('initializing view');
-    //         var view = this;
-    //         this.model.on('change', function() {
-    //             console.log('change event happened');
-    //             view.render();
-    //             //console.log(this.model.get('images'));
-    //         });
-    //
-    //     },
-    //     render: function() {
-    //         console.log('views render function called');
-    //         var data = this.model.toJSON();
-    //         var html = Handlebars.templates.imageBoard(data);
-    //         this.$el.html(html);
-    //     }
-    // });
-    //
-    // var myBoardView = new BoardView({
-    //     el: '#main',
-    //     model: new BoardModel
-    // });
+
+    var myBoardView = new BoardView({
+        el: '#main',
+        model: new BoardModel
+    });
 
 
 }());
