@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="/fonts/font-awesome/css/font-awesome.min.css" >
     <link rel="stylesheet" href="/css/main.css">
     <title>Document</title>
 </head>
@@ -19,6 +20,7 @@
             <figure class="thumbnail">
                 <img src="{{image}}" alt="{{description}}">
             </figure>
+            <p class="likes"><i class="fa fa-heart-o"></i> {{#if likes}} {{.}} likes {{/if}}</p>
             <p class="posted-by"><span>Posted By: </span>{{username}}</p>
             <p class="description">{{description}}</p>
         </div>
