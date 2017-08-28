@@ -10,7 +10,7 @@ app.use(require('body-parser').urlencoded({
 }));
 
 app.get('/home', (request, response, next)=> {
-
+    db
 });
 
 

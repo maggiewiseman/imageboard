@@ -1,8 +1,16 @@
 const spicedPg = require('spiced-pg');
+const secrets = require('./secrets.json');
 
-function db('query', request, response) {
-    if('query' == ) {
-        
+const db = spicedPg(`postgres:${secrets.dbUser}:${secrets.pass}@localhost:5432/imageboard`);
+
+function dbQuery(query, request, response) {
+    if(query == 'getAllImages') {
+        let queryStr = 'SELECT * from images';
+        return db.query(queryStr).then((result) => {
+            console.log('DB getAllImages', result.rows);
+
+            return result.rows;
+        }).catch(e => console.error(e.stack));
     }
 }
 
@@ -10,4 +18,8 @@ function db('query', request, response) {
 
 
 
-module.exports.db = db;
+module.exports.dbQuery = dbQuery;
+
+/*** Tests ***/
+
+dbQuery('getAllImages');
