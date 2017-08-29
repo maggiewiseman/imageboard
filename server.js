@@ -1,13 +1,13 @@
-var express = require('express');
-var bodyParser = require('body-parser');
-var dbQ = require('./db').dbQuery;
-var urlPrepend = require('./config.json');
-var multer = require('multer');
-var uidSafe = require('uid-safe');
-var path = require('path');
-var bodyParser = require('body-parser');
+const express = require('express');
+const bodyParser = require('body-parser');
+const dbQ = require('./db').dbQuery;
+const urlPrepend = require('./config.json');
+const multer = require('multer');
+const uidSafe = require('uid-safe');
+const path = require('path');
+const fs = require('fs');
 
-var app = express();
+const app = express();
 
 app.use(express.static(__dirname + '/public'));
 
@@ -15,10 +15,23 @@ app.use(bodyParser.urlencoded({
     extended: false
 }));
 
-app.use(bodyParser.json);
+//app.use(bodyParser.json);
+
+/********** Knox Shenanigans ****************/
+const knox = require('knox');
+let secrets;
+if (process.env.NODE_ENV == 'production') {
+    secrets = process.env; // in prod the secrets are environment variables
+} else {
+    secrets = require('./secrets'); // secrets.json is in .gitignore
+}
+const client = knox.createClient({
+    key: secrets.AWS_KEY,
+    secret: secrets.AWS_SECRET,
+    bucket: 'maggiesgingerimageboard'
+});
 
 /********** Multer File Upload Shenanigans **************/
-
 var diskStorage = multer.diskStorage({
 
     destination: function (req, file, callback) {
@@ -39,6 +52,7 @@ var uploader = multer({
     }
 });
 
+/********** Actual Routes **************/
 app.get('/home', (req, res, next)=> {
     return dbQ('getAllImages').then((results)=> {
         //console.log('SERVER /home:', results);
@@ -49,7 +63,8 @@ app.get('/home', (req, res, next)=> {
     }).catch(e => console.log(e.stack));
 });
 
-app.post('/upload', uploader.single('file'), function(req, res) {
+app.post('/upload', uploader.single('file'), sendToAWS, function(req, res) {
+    console.log('out of sendToAWS need to save to db');
     if (req.file) {
         console.log('the file object: ', req.file);
         res.json({
@@ -73,6 +88,17 @@ function formatHomeJSON(rows) {
     return rows.map(function(image) {
         image.image = urlPrepend.s3Url + image.image;
         return image;
-
     });
+}
+
+function sendToAWS(req) {
+    console.log('in send to AWS function');
+    const s3Request = client.put(req.file.filename, {
+        'Content-Type': req.file.mimetype,
+        'Content-Length': req.file.size,
+        'x-amz-acl': 'public-read'
+    });
+
+    const readStream = fs.createReadStream(req.file.path);
+    readStream.pipe(s3Request);
 }
