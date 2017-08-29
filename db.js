@@ -28,6 +28,6 @@ module.exports.dbQuery = dbQuery;
 
 //dbQuery('getAllImages');
 
-dbQuery('saveImage', ['x3hQUsyUdrUfU_g_SvUKw_jt93j6LWMf.png', 'otherfunkychicken', 'other Backbone Tutorial', 'maybe the same Screenshot of backbone tutorial']).then((results)=> {
-    console.log('Test dbQuery', results);
-});
+// dbQuery('saveImage', ['x3hQUsyUdrUfU_g_SvUKw_jt93j6LWMf.png', 'otherfunkychicken', 'other Backbone Tutorial', 'maybe the same Screenshot of backbone tutorial']).then((results)=> {
+//     console.log('Test dbQuery', results);
+// });

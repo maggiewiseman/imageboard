@@ -66,12 +66,20 @@ app.get('/home', (req, res, next)=> {
 app.post('/upload', uploader.single('file'), sendToAWS, function(req, res) {
     console.log('out of sendToAWS need to save to db');
     if (req.file) {
-        return dbQ('saveImage').then((results) => {
+        console.log("file: ", req.file);
+        console.log("body: ", req.body);
+        var data = [
+            req.file.filename,
+            req.body.username,
+            req.body.title,
+            req.body.description
+        ];
+        return dbQ('saveImage', data).then((results) => {
             console.log('back from saving data: ', results);
             res.json({
                 success: true
             });
-        }).catch(e => console.error(e.stack));    
+        }).catch(e => console.error(e.stack));
     } else {
         res.json({
             success: false
@@ -93,7 +101,7 @@ function formatHomeJSON(rows) {
     });
 }
 
-function sendToAWS(req) {
+function sendToAWS(req, res, next) {
     console.log('in send to AWS function');
     const s3Request = client.put(req.file.filename, {
         'Content-Type': req.file.mimetype,
@@ -103,4 +111,5 @@ function sendToAWS(req) {
 
     const readStream = fs.createReadStream(req.file.path);
     readStream.pipe(s3Request);
+    next();
 }
