@@ -33,7 +33,6 @@
             this.model.on('change', function() {
                 console.log('change event happened');
                 view.render();
-                console.log(this.model);
             });
 
         },
@@ -41,7 +40,6 @@
             console.log('views render function called');
             var data = this.model.toJSON();
             var html = Handlebars.templates.imageBoard(data);
-            console.log(html);
             this.$el.html(html);
         },
         addLike: function(e) {
@@ -59,6 +57,24 @@
 
     /************* UPLOAD ******************/
     var UploadModel = Backbone.Model.extend({
+        save: function() {
+            var formData = new FormData;  //invented object to send file in ajax
+            formData.append('file', this.get('file'));
+            formData.append('title', this.get('title'));
+            formData.append('description', this.get('description'));
+            formData.append('username', this.get('username'));
+
+            $.ajax({
+                url: '/upload',
+                method: 'POST',
+                data: formData,
+                processData: false,
+                contentType: false,
+                success: function() {
+                    this.trigger('uploadSuccess');
+                }
+            });
+        },
         url: "/upload"
     });
 
@@ -73,6 +89,11 @@
             console.log(html);
             this.$el.html(html);
         },
+        events: {
+            'uploadSuccess' : function(e) {
+                console.log('uploadSucess Event', e);
+            }
+        }
     });
 
     /*********** ROUTER ****************/
