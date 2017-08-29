@@ -43,7 +43,15 @@ nav a {
     width: 800px;
     height: 400px;
     display: none;
+    color: white;
+    font-size: 20px;
+    display: flex;
+    flex-flow: column;
+    align-items: center;
+    justify-content: space-around;
 }
+
+
 
 #main {
     margin-top: 50px;
@@ -86,6 +94,14 @@ figure.thumbnail{
     min-width: 200px;
     max-width: 200px;
     object-fit: cover;
+}
+
+.heart {
+    text-decoration: none;
+}
+
+.heart:hover {
+    color: blue;
 }
 
 .posted-by {

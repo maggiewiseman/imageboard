@@ -36,7 +36,7 @@
             });
         },
         render: function() {
-            console.log('views render function called');
+            //console.log('views render function called');
             var data = this.model.toJSON();
             console.log('rendering: ', data);
             var html = Handlebars.templates.imageBoard(data);
@@ -44,7 +44,13 @@
         },
         addLike: function(e) {
             e.preventDefault();
-            console.log('liked!');
+            console.log(e)
+            console.log('liked!', $(e.target.parentElement.parentElement.previousElementSibling.children[0].attributes[0]).val());
+
+            // var numLikes = this.model.get('likes');
+            // console.log(likes);
+            // this.model.set().save();
+
         },
         events: {
             'click .heart': 'addLike'
@@ -56,7 +62,7 @@
     var UploadModel = Backbone.Model.extend({
         save: function() {
             var model = this;
-            console.log('in upload model save function');
+            //console.log('in upload model save function');
             var formData = new FormData;  //invented object to send file in ajax
             formData.append('file', this.get('file'));
             formData.append('title', this.get('title'));
@@ -70,7 +76,7 @@
                 processData: false,
                 contentType: false,
                 success: function() {
-                    console.log('successful upload', this);
+                    //console.log('successful upload', this);
 
                     model.trigger('uploadSuccess');
                 }
@@ -87,7 +93,7 @@
         },
         render: function() {
             var html = Handlebars.templates.upload();
-            console.log(html);
+            //console.log(html);
             this.$el.html(html);
         },
         events: {
@@ -98,11 +104,11 @@
                     title: this.$el.find('input[name=title]').val(),
                     file: this.$el.find('input[type="file"]').prop('files')[0],
                 };
-                console.log('saveInfo', saveInfo);
+                //console.log('saveInfo', saveInfo);
                 this.model.set(saveInfo).save();
             },
             'click #cancel-btn': function() {
-                console.log('cancel button clicked');
+                //console.log('cancel button clicked');
                 router.navigate('home', {trigger: true});
             }
         },
@@ -121,7 +127,7 @@
             'upload': 'upload'
         },
         upload: function() {
-            $('#main').off();
+            $('#upload-section').off();
             $('#upload-section').show();
             console.log('upload route');
             new UploadView({
