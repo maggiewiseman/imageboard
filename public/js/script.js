@@ -28,7 +28,7 @@
 
     var BoardView = Backbone.View.extend({
         initialize: function() {
-            console.log('initializing view');
+            console.log('initializing board view');
             var view = this;
             this.model.on('change', function() {
                 console.log('change event happened');
@@ -52,10 +52,53 @@
         }
     });
 
-    var myBoardView = new BoardView({
-        el: '#main',
-        model: new BoardModel
+    // var myBoardView = new BoardView({
+    //     el: '#main',
+    //     model: new BoardModel
+    // });
+
+    /************* UPLOAD ******************/
+    var UploadModel = Backbone.Model.extend({
+        url: "/upload"
     });
 
+    var UploadView = Backbone.View.extend({
+        initialize: function() {
+            console.log('initializing upload view');
+            this.render();
 
+        },
+        render: function() {
+            var html = Handlebars.templates.upload();
+            console.log(html);
+            this.$el.html(html);
+        },
+    });
+
+    /*********** ROUTER ****************/
+    var Router = Backbone.Router.extend({
+        routes: {
+            '' : 'home',
+            'image' : 'image',
+            'upload': 'upload'
+        },
+        upload: function() {
+            console.log('upload route');
+            new UploadView({
+                el: '#main',
+                model: new UploadModel
+            });
+        },
+        home: function() {
+            new BoardView({
+                el: '#main',
+                model: new BoardModel
+            });
+        }
+    });
+
+    var router = new Router;
+
+    //tell it to start listening for changes to the url
+    Backbone.history.start();
 }());
