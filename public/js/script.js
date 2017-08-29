@@ -79,6 +79,7 @@
     var Router = Backbone.Router.extend({
         routes: {
             '' : 'home',
+            'home' : 'home',
             'image' : 'image',
             'upload': 'upload'
         },
