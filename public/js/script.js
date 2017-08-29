@@ -82,10 +82,8 @@
     var UploadView = Backbone.View.extend({
         initialize: function() {
             console.log('initializing upload view');
-            this.listenTo(this.model, 'uploadSuccess', this.render);
+            this.listenTo(this.model, 'uploadSuccess', this.clearUploadView);
             this.render();
-
-
         },
         render: function() {
             var html = Handlebars.templates.upload();
@@ -102,9 +100,16 @@
                 };
                 console.log('saveInfo', saveInfo);
                 this.model.set(saveInfo).save();
+            },
+            'click #cancel-btn': function() {
+                console.log('cancel button clicked');
+                router.navigate('home', {trigger: true});
             }
         },
+        clearUploadView: function() {
+            router.navigate('home', {trigger: true});
 
+        }
     });
 
     /*********** ROUTER ****************/
@@ -117,14 +122,16 @@
         },
         upload: function() {
             $('#main').off();
+            $('#upload-section').show();
             console.log('upload route');
             new UploadView({
-                el: '#main',
+                el: '#upload-section',
                 model: new UploadModel
             });
         },
         home: function() {
             $('#main').off();
+            $('#upload-section').hide();
             new BoardView({
                 el: '#main',
                 model: new BoardModel

@@ -34,6 +34,17 @@ nav a {
 .fa {
     padding-right: 6px;
 }
+
+#upload-section {
+    position:absolute;
+    top: 100px;
+    left: 200px;
+    background: #363636;
+    width: 800px;
+    height: 400px;
+    display: none;
+}
+
 #main {
     margin-top: 50px;
     display: flex;
