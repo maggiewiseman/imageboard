@@ -9,6 +9,12 @@
     <title>Document</title>
 </head>
 <body>
+    <nav>
+        <ul class="nav-ul">
+            <li><a href="#/home"><i class="fa fa-home"></i>Home</a></li>
+            <li><a href="#/Upload"><i class="fa fa-upload"></i>Upoload</a></li>
+        </ul>
+    </nav>
     <section id="main"></section>
 
 
@@ -40,7 +46,13 @@
         <!-- </div> -->
     </template>
     <template id="image"></template>
-    <template id="upload"></template>
+    <template id="upload">
+        <input type="text" placeholder="Title">
+        <input type="text" placeholder="Your name">
+        <input type="textarea" placeholder="Description">
+        <input type="file">
+        <button id="upload-btn">Upload</button>
+    </template>
 
     <script src="js/jquery-3.1.1.min.js" charset="utf-8"></script>
     <script src="js/underscore-min.js" charset="utf-8"></script>
