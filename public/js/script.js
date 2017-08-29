@@ -34,11 +34,11 @@
                 console.log('change event happened');
                 view.render();
             });
-
         },
         render: function() {
             console.log('views render function called');
             var data = this.model.toJSON();
+            console.log('rendering: ', data);
             var html = Handlebars.templates.imageBoard(data);
             this.$el.html(html);
         },

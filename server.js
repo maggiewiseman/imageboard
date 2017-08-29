@@ -63,6 +63,10 @@ app.get('/home', (req, res, next)=> {
     }).catch(e => console.log(e.stack));
 });
 
+app.post('/likes', (req, res, next) => {
+
+});
+
 app.post('/upload', uploader.single('file'), sendToAWS, function(req, res) {
     console.log('out of sendToAWS need to save to db');
     if (req.file) {
@@ -111,5 +115,18 @@ function sendToAWS(req, res, next) {
 
     const readStream = fs.createReadStream(req.file.path);
     readStream.pipe(s3Request);
-    next();
+
+    s3Request.on('response', s3Response => {
+
+        const wasSuccessful = s3Response.statusCode == 200;
+        console.log('wasSuccessful', wasSuccessful);
+        if(wasSuccessful) {
+            next();
+        } else {
+            res.json({
+                success: false
+            });
+        }
+    });
+    
 }
