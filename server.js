@@ -17,9 +17,13 @@ app.get('/home', (req, res, next)=> {
         var images = {images: formatHomeJSON(results)};
         console.log("images: ", images);
         res.json(images);
+        //res.json(formatHomeJSON(results));
     }).catch(e => console.log(e.stack));
 });
 
+app.post('', (req, res) => {
+    return dbQ('updateImage')
+});
 
 app.listen(process.env.PORT || 8080, () => {
     console.log('listening on port 8080');

@@ -14,13 +14,13 @@
 
     var ImageCollection = Backbone.Collection.extend({
         initialize: function() {
+            console.log('initializing collection');
+
             this.fetch({
                 success: function(data) {
-                    console.log('success', data);
+                    
                 }
             });
-            console.log('initializing collection');
-            console.log('this.collection', this.collection);
         },
         url: '/home',
         model: ImageModel
@@ -58,15 +58,12 @@
 
     var BoardView = Backbone.View.extend({
         initialize: function() {
-            // console.log('initializing view');
-            // var view = this;
-            // this.model.on('change', function() {
-            //     console.log('change event happened');
-            //     view.render();
-            //     console.log(this.model);
-            // });
-            this.render();
-
+            console.log('initializing view');
+            var view = this;
+            this.models.on('change', function() {
+                console.log('change event happened');
+                view.render();
+            });
         },
         collection: ImageCollection,
         singleImageView: function(image) {

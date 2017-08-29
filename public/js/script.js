@@ -18,15 +18,14 @@
 
         },
         url: '/home'
+        // addLike: function() {
+        //     var numLikes = this.model.get('likes');
+        //     this.model.set({likes : numLikes++ });
+        //     this.save();
+        // }
 
     });
 
-//     var myBoard = new BoardModel();
-// myBoard.on('change', function() {
-//         console.log('change event happened');
-//         view.render();
-//         console.log(myBoard.get('images'));
-//     });
     var BoardView = Backbone.View.extend({
         initialize: function() {
             console.log('initializing view');
@@ -44,6 +43,12 @@
             var html = Handlebars.templates.imageBoard(data);
             console.log(html);
             this.$el.html(html);
+        },
+        addLike: function(e) {
+            this.model.addLike();
+        },
+        events: {
+            'click .heart': 'addLike'
         }
     });
 
