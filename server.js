@@ -66,10 +66,12 @@ app.get('/home', (req, res, next)=> {
 app.post('/upload', uploader.single('file'), sendToAWS, function(req, res) {
     console.log('out of sendToAWS need to save to db');
     if (req.file) {
-        console.log('the file object: ', req.file);
-        res.json({
-            success: true
-        });
+        return dbQ('saveImage').then((results) => {
+            console.log('back from saving data: ', results);
+            res.json({
+                success: true
+            });
+        }).catch(e => console.error(e.stack));    
     } else {
         res.json({
             success: false
