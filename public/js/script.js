@@ -58,6 +58,7 @@
     /************* UPLOAD ******************/
     var UploadModel = Backbone.Model.extend({
         save: function() {
+            console.log('in upload model save function');
             var formData = new FormData;  //invented object to send file in ajax
             formData.append('file', this.get('file'));
             formData.append('title', this.get('title'));
@@ -71,7 +72,8 @@
                 processData: false,
                 contentType: false,
                 success: function() {
-                    this.trigger('uploadSuccess');
+                    console.log('successful upload');
+                    //this.trigger('uploadSuccess');
                 }
             });
         },
@@ -98,7 +100,7 @@
                     file: this.$el.find('input[type="file"]').prop('files')[0],
                 };
                 console.log('saveInfo', saveInfo);
-                this.model.set(saveInfo);
+                this.model.set(saveInfo).save();
             },
             'uploadSuccess' : function(e) {
                 console.log('uploadSucess Event', e);
