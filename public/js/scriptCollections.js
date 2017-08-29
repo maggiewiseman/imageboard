@@ -60,6 +60,7 @@ var BoardView = Backbone.View.extend({
         view.render();
         //
     },
+    el: '#main',
     collection: ImageCollection,
     singleImageView: function(image) {
         var imgView = new ImageView({model: image});
@@ -75,7 +76,7 @@ var BoardView = Backbone.View.extend({
         //console.log();
         //var html = Handlebars.templates.imageBoard(data);
         console.log(this.$el);
-        //this.$el.html(html);
+        this.$el.html(html);
     },
     addLike: function(e) {
         this.model.addLike();
