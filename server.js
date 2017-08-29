@@ -58,8 +58,8 @@ app.get('/home', (req, res, next)=> {
         //console.log('SERVER /home:', results);
         var images = {images: formatHomeJSON(results)};
         //console.log("images: ", images);
-        res.json(images);
-        //res.json(formatHomeJSON(results));
+        //res.json(images);
+        res.json(formatHomeJSON(results));
     }).catch(e => console.log(e.stack));
 });
 
@@ -128,5 +128,5 @@ function sendToAWS(req, res, next) {
             });
         }
     });
-    
+
 }
