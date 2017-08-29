@@ -30,26 +30,38 @@ var ImageView = Backbone.View.extend({
     }
 });
 
-var ImageCollection = Backbone.Collection.extend({
-    url: '/home',
-    model: ImageModel
-});
 
-var myCollection = new ImageCollection;
-var boardView;
-myCollection.fetch({
-    success: function(){
-        console.log('data uploaded'); // some callback to do stuff with the collection you made
-        boardView = new BoardView({collection: myCollection});
-    },
-    error: function(){
-        alert("Oh noes! Something went wrong!");
-    }
-});
-console.log(myCollection);
+
+// var myCollection = new ImageCollection;
+// var boardView;
+// myCollection.fetch({
+//     success: function(){
+//         console.log('data uploaded'); // some callback to do stuff with the collection you made
+//         boardView = new BoardView({collection: myCollection});
+//     },
+//     error: function(){
+//         alert("Oh noes! Something went wrong!");
+//     }
+// });
+// console.log(myCollection);
 
 
 /*********** Board View **************/
+var ImageCollection = Backbone.Collection.extend({
+    initialize: function() {
+        this.fetch({
+            success: function(){
+                console.log('data uploaded'); // some callback to do stuff with the collection you made
+                new BoardView({collection: this});
+            },
+            error: function(){
+                alert("Oh noes! Something went wrong!");
+            }
+        });
+    },
+    url: '/home',
+    model: ImageModel
+});
 
 var BoardView = Backbone.View.extend({
     initialize: function() {
@@ -85,10 +97,36 @@ var BoardView = Backbone.View.extend({
     }
 });
 
-    // var myBoardView = new BoardView({
-    //     el: '#main',
-    //     collection: new ImageCollection
-    // });
+/*********** ROUTER ****************/
+var Router = Backbone.Router.extend({
+    routes: {
+        '' : 'home',
+        'home' : 'home',
+        'image' : 'image',
+        'upload': 'upload'
+    },
+    upload: function() {
+        $('#upload-section').off();
+        $('#upload-section').show();
+        console.log('upload route');
+        new UploadView({
+            el: '#upload-section',
+            model: new UploadModel
+        });
+    },
+    home: function() {
+        $('#main').off();
+        $('#upload-section').hide();
+        new ImageCollection({
+            el: '#main'
+        });
+    }
+});
+
+var router = new Router;
+
+//tell it to start listening for changes to the url
+Backbone.history.start();
 
 
 //}());

@@ -49,6 +49,7 @@ nav a {
     flex-flow: column;
     align-items: center;
     justify-content: space-around;
+    display: none;
 }
 
 
