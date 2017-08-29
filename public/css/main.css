@@ -51,10 +51,15 @@ nav a {
     text-align: center;
 }
 
+.image-div > * {
+    padding-bottom: 10px;
+}
+
 .title {
     text-transform: uppercase;
     font-size: 14px;
     color: gray;
+    padding-bottom: 20px;
 }
 
 figure.thumbnail{
