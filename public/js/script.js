@@ -90,6 +90,16 @@
             this.$el.html(html);
         },
         events: {
+            'click button': function() {
+                var saveInfo = {
+                    username: this.$el.find('input[name=username]').val(),
+                    description: this.$el.find('input[name=description]').val(),
+                    title: this.$el.find('input[name=title]').val(),
+                    file: this.$el.find('input[type="file"]').prop('files')[0],
+                };
+                console.log('saveInfo', saveInfo);
+                this.model.set(saveInfo);
+            },
             'uploadSuccess' : function(e) {
                 console.log('uploadSucess Event', e);
             }
