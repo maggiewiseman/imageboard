@@ -5,6 +5,7 @@
 
 body {
     font-family: 'Helvetica', serif;
+    background: rgba(255, 71, 87, 1);
 }
 nav {
     width: 100%;
@@ -42,11 +43,12 @@ nav a {
 }
 
 .image-div {
-    height: auto;
+    background: rgba(255,255,255, 0.5);
+    border-radius: 10px;
+    padding: 30px 15px;
+    height: 400px;
     width: 30%;
     text-align: center;
-    overflow: hidden;
-
 }
 
 .title {

@@ -5,14 +5,17 @@ var urlPrepend = require('./config.json');
 var multer = require('multer');
 var uidSafe = require('uid-safe');
 var path = require('path');
+var bodyParser = require('body-parser');
 
 var app = express();
 
 app.use(express.static(__dirname + '/public'));
 
-app.use(require('body-parser').urlencoded({
+app.use(bodyParser.urlencoded({
     extended: false
 }));
+
+app.use(bodyParser.json);
 
 /********** Multer File Upload Shenanigans **************/
 
