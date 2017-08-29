@@ -55,6 +55,7 @@
     /************* UPLOAD ******************/
     var UploadModel = Backbone.Model.extend({
         save: function() {
+            var model = this;
             console.log('in upload model save function');
             var formData = new FormData;  //invented object to send file in ajax
             formData.append('file', this.get('file'));
@@ -69,8 +70,9 @@
                 processData: false,
                 contentType: false,
                 success: function() {
-                    console.log('successful upload');
-                    //this.trigger('uploadSuccess');
+                    console.log('successful upload', this);
+
+                    model.trigger('uploadSuccess');
                 }
             });
         },
@@ -80,7 +82,9 @@
     var UploadView = Backbone.View.extend({
         initialize: function() {
             console.log('initializing upload view');
+            this.listenTo(this.model, 'uploadSuccess', this.render);
             this.render();
+
 
         },
         render: function() {
@@ -89,7 +93,7 @@
             this.$el.html(html);
         },
         events: {
-            'click button': function() {
+            'click #upload-btn': function() {
                 var saveInfo = {
                     username: this.$el.find('input[name=username]').val(),
                     description: this.$el.find('input[name=description]').val(),
@@ -98,11 +102,9 @@
                 };
                 console.log('saveInfo', saveInfo);
                 this.model.set(saveInfo).save();
-            },
-            'uploadSuccess' : function(e) {
-                console.log('uploadSucess Event', e);
             }
-        }
+        },
+
     });
 
     /*********** ROUTER ****************/
@@ -114,6 +116,7 @@
             'upload': 'upload'
         },
         upload: function() {
+            $('#main').off();
             console.log('upload route');
             new UploadView({
                 el: '#main',
@@ -121,6 +124,7 @@
             });
         },
         home: function() {
+            $('#main').off();
             new BoardView({
                 el: '#main',
                 model: new BoardModel
