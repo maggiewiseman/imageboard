@@ -43,17 +43,14 @@
             this.$el.html(html);
         },
         addLike: function(e) {
-            this.model.addLike();
+            e.preventDefault();
+            console.log('liked!');
         },
         events: {
             'click .heart': 'addLike'
         }
     });
 
-    // var myBoardView = new BoardView({
-    //     el: '#main',
-    //     model: new BoardModel
-    // });
 
     /************* UPLOAD ******************/
     var UploadModel = Backbone.Model.extend({
