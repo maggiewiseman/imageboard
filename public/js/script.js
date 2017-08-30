@@ -122,10 +122,22 @@
         initialize: function(id) {
             this.url = '/image/' + id;
             this.fetch();
-        },
+        }
     });
 
 
+    var BigImageView = Backbone.View.extend({
+        initialize: function(id) {
+            this.render();
+        },
+        template: Handlebars.templates.bigImage,
+        render: function() {
+            var data = this.template(this.model.toJSON());
+            console.log('rendering: ', data);
+            var html = (data);
+            this.$el.html(html);
+        }
+    });
 
     /*********** ROUTER ****************/
     var Router = Backbone.Router.extend({
@@ -155,6 +167,10 @@
         },
         image: function(id) {
             console.log('id is: ', id);
+            new BigImageView({
+                el: '#main',
+                model: new BigImageModel
+            })
         }
     });
 
