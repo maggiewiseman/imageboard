@@ -94,10 +94,15 @@ app.post('/upload', uploader.single('file'), sendToAWS, function(req, res) {
 app.get('/image/:id', (req, res, next) => {
     //I need to get the image information from the image table and join that with the comments
     var data = [req.params.id];
-    return dbQ('getImage', data).then((results) => {
-        console.log('back from getting Image: ', results);
-        res.json({
-            success: true
+    return dbQ('getImage', data).then((imageData) => {
+
+        return dbQ('getComments').then((comments)=> {
+            var imageAndComments = {
+                imageData: formatHomeJSON(imageData),
+                comments: formatHomeJSON(comments)
+            };
+
+            res.json(imageAndComments);
         });
     }).catch(e => console.error(e.stack));
     //console.log('params', req.params.id);

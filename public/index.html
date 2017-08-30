@@ -25,9 +25,9 @@
         <div class="image-div">
             <h3 class="title">{{title}}</h3>
             <figure class="thumbnail">
-                <a href="/image" class="img-link"><img src="{{image}}" alt="{{description}}"></a>
+                <a href="/image" class="img-link" id="image-{{id}}"><img src="{{image}}" alt="{{description}}"></a>
             </figure>
-            <p class="likes"><a class="heart" href="#"><i class="fa fa-heart-o"></i> {{#if likes}} {{likes}} likes {{/if}}</a></p>
+            <p class="likes"><a  id="heart-{{id}}"class="heart" href="#"><i class="fa fa-heart-o"></i> {{#if likes}} {{likes}} likes {{/if}}</a></p>
             <p class="posted-by"><span>Posted By: </span>{{username}}</p>
             <p class="description">{{description}}</p>
         </div>
