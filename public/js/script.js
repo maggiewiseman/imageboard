@@ -119,8 +119,9 @@
 
     /*********** BIG IMAGE MODEL AND ROUTER ****************/
     var BigImageModel = Backbone.Model.extend({
-        initialize: function(id) {
-            this.url = '/image/' + id;
+        initialize: function() {
+            console.log('initializing BigImageModel', this.id);
+            this.url = '/image/' + this.id;
             this.fetch();
         }
     });
@@ -128,11 +129,18 @@
 
     var BigImageView = Backbone.View.extend({
         initialize: function(id) {
-            this.render();
+            var view = this;
+            this.model.on('change', function() {
+                view.render();
+            });
+            
         },
-        template: Handlebars.templates.bigImage,
+
         render: function() {
-            var data = this.template(this.model.toJSON());
+            console.log(Handlebars.templates);
+            console.log(this.model.toJSON());
+            console.log(this.model.get("imageData"));
+            var data = Handlebars.templates.bigImage(this.model.toJSON());
             console.log('rendering: ', data);
             var html = (data);
             this.$el.html(html);
@@ -169,8 +177,10 @@
             console.log('id is: ', id);
             new BigImageView({
                 el: '#main',
-                model: new BigImageModel
-            })
+                model: new BigImageModel({
+                    id: id
+                })
+            });
         }
     });
 

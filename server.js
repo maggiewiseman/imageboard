@@ -57,7 +57,7 @@ app.get('/home', (req, res, next)=> {
     return dbQ('getAllImages').then((results)=> {
         //console.log('SERVER /home:', results);
         var images = {images: formatHomeJSON(results)};
-        //console.log("images: ", images);
+        console.log("images: ", images);
         res.json(images);
         //res.json(results);
     }).catch(e => console.log(e.stack));
@@ -95,7 +95,7 @@ app.get('/image/:id', (req, res, next) => {
     //I need to get the image information from the image table and join that with the comments
     var data = [req.params.id];
     return dbQ('getImage', data).then((imageData) => {
-        console.log('imageData, ', imageData.rows);
+        console.log('imageData, ', imageData.rows[0]);
         return dbQ('getComments', data).then((comments)=> {
             console.log('comments', comments.rows);
             var imageAndComments = {

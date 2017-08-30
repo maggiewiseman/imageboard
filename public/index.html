@@ -49,13 +49,15 @@
 
     <template id="bigImage">
         <div class="full-image-view">
-            <h1 class="title">{{title}}</h1>
+            {{#each imageData}}
+            <h1 class="title">{{this.title}}</h1>
             <figure class="thumbnail">
                 <a href="/image" class="img-link"><img src="{{image}}" alt="{{description}}"></a>
             </figure>
-            <p class="likes"><a class=".heart" href="#"><i class="fa fa-heart-o"></i> {{#if likes}} {{likes}} likes {{/if}}</a></p>
+            <p class="likes"><a class=".heart" href="#"><i class="fa fa-heart-o"></i> {{#if this.likes}} {{this.likes}} this.likes {{/if}}</a></p>
             <p class="posted-by"><span>Posted By: </span>{{username}}</p>
             <p class="description">{{description}}</p>
+            {{/each}}
             {{> commentList}}
         </div>
     </template>
