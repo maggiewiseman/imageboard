@@ -77,7 +77,6 @@
                 contentType: false,
                 success: function() {
                     //console.log('successful upload', this);
-
                     model.trigger('uploadSuccess');
                 }
             });
@@ -117,6 +116,16 @@
 
         }
     });
+
+    /*********** BIG IMAGE MODEL AND ROUTER ****************/
+    var BigImageModel = Backbone.Model.extend({
+        initialize: function(id) {
+            this.url = '/image/' + id;
+            this.fetch();
+        },
+    });
+
+
 
     /*********** ROUTER ****************/
     var Router = Backbone.Router.extend({

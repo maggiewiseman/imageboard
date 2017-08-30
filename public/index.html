@@ -25,7 +25,7 @@
         <div class="image-div">
             <h3 class="title">{{title}}</h3>
             <figure class="thumbnail">
-                <img src="{{image}}" alt="{{description}}">
+                <a href="/image" class="img-link"><img src="{{image}}" alt="{{description}}"></a>
             </figure>
             <p class="likes"><a class="heart" href="#"><i class="fa fa-heart-o"></i> {{#if likes}} {{likes}} likes {{/if}}</a></p>
             <p class="posted-by"><span>Posted By: </span>{{username}}</p>
@@ -39,7 +39,7 @@
         <!-- <div class="image-div"> -->
             <h3 class="title">{{title}}</h3>
             <figure class="thumbnail">
-                <img src="{{image}}" alt="{{description}}">
+                <a href="/image" class="img-link"><img src="{{image}}" alt="{{description}}"></a>
             </figure>
             <p class="likes"><a class=".heart" href="#"><i class="fa fa-heart-o"></i> {{#if likes}} {{likes}} likes {{/if}}</a></p>
             <p class="posted-by"><span>Posted By: </span>{{username}}</p>
@@ -47,7 +47,37 @@
         <!-- </div> -->
     </template>
 
-    
+    <template id="full-image">
+        <div class="full-image">
+            <h1 class="title">{{title}}</h1>
+            <figure class="thumbnail">
+                <a href="/image" class="img-link"><img src="{{image}}" alt="{{description}}"></a>
+            </figure>
+            <p class="likes"><a class=".heart" href="#"><i class="fa fa-heart-o"></i> {{#if likes}} {{likes}} likes {{/if}}</a></p>
+            <p class="posted-by"><span>Posted By: </span>{{username}}</p>
+            <p class="description">{{description}}</p>
+            {{> commentList}}
+        </div>
+    </template>
+
+    <template id="commentList">
+        {{> comments}}
+        <div class="post-a-comment">
+            <form class="comment-form" action="/comment/post" method="post">
+                <input type="text" placeholder="name" name="username">
+                <input type="textarea" placeholder="comment here" name="commentText">
+                <button type="submit" class="comment-btn">
+            </form>
+        </div>
+    </template>
+
+    <template id="comments">
+        {{# each comments}}
+        <p class="username">{{username}}</p>
+        <p class="date">{{date}}</p>
+        <p class="comment-text">{{commenttext}}</p>
+        {{/each}}
+    </template>
 
     <template id="upload">
         <input type="text" placeholder="Title" name="title">
@@ -62,7 +92,7 @@
     <script src="js/underscore-min.js" charset="utf-8"></script>
     <script src="js/backbone-min.js" charset="utf-8"></script>
     <script src="js/handlebars.min.js" charset="utf-8"></script>
-    <script src=js/scriptCollections.js charset="utf-8"></script>
+    <script src=js/script.js charset="utf-8"></script>
     <script>
 
 

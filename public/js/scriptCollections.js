@@ -23,19 +23,32 @@ var ImageView = Backbone.View.extend({
     template: Handlebars.templates.image,
     render: function() {
 
-        var html = Handlebars.templates.image(this.model.toJSON());
-        console.log('html:', html);
+        var html = this.template(this.model.toJSON());
+        //console.log('html:', html);
         this.$el.html(html);
         return this.$el;
     }
 });
 
 var ImageCollection = Backbone.Collection.extend({
+    initialize: function() {
+        this.fetch({
+            success: function(){
+                console.log('data uploaded'); // some callback to do stuff with the collection you made
+                new BoardView({collection: this});
+            },
+            error: function(){
+                alert("Oh noes! Something went wrong!");
+            }
+        });
+    },
     url: '/home',
     model: ImageModel
 });
 
+
 var myCollection = new ImageCollection;
+
 var boardView;
 myCollection.fetch({
     success: function(){
@@ -46,11 +59,9 @@ myCollection.fetch({
         alert("Oh noes! Something went wrong!");
     }
 });
-console.log(myCollection);
 
 
 /*********** Board View **************/
-
 var BoardView = Backbone.View.extend({
     initialize: function() {
         console.log('initializing view');
@@ -71,12 +82,8 @@ var BoardView = Backbone.View.extend({
     render: function() {
         console.log('this collection: ', this.collection);
         this.collection.forEach(this.singleImageView, this);
-        // console.log('views render function called');
-        //var data = this.collection.toJSON();
-        //console.log();
-        //var html = Handlebars.templates.imageBoard(data);
         console.log(this.$el);
-        this.$el.html(html);
+        //this.$el.html(html);
     },
     addLike: function(e) {
         this.model.addLike();
@@ -86,10 +93,36 @@ var BoardView = Backbone.View.extend({
     }
 });
 
-    // var myBoardView = new BoardView({
-    //     el: '#main',
-    //     collection: new ImageCollection
-    // });
 
 
+/*********** ROUTER ****************/
+var Router = Backbone.Router.extend({
+    routes: {
+        '' : 'home',
+        'home' : 'home',
+        'image' : 'image',
+        'upload': 'upload'
+    },
+    upload: function() {
+        $('#upload-section').off();
+        $('#upload-section').show();
+        console.log('upload route');
+        this.uploadView = new UploadView({
+            el: '#upload-section',
+            model: new UploadModel
+        });
+    },
+    home: function() {
+        $('#main').off();
+        $('#upload-section').hide();
+        this.boardColl = new ImageCollection({
+            el: '#main'
+        });
+    }
+});
+
+var router = new Router;
+
+//tell it to start listening for changes to the url
+Backbone.history.start();
 //}());

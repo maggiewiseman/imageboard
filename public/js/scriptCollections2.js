@@ -11,7 +11,7 @@ Array.prototype.slice.call(templates).forEach(function(tmpl) {
 Handlebars.partials = Handlebars.templates;
 console.log('Templates', Handlebars.templates);
 
-/*********** Image Model, View, Collection **************/
+/*********** Image Model, View **************/
 var ImageModel = Backbone.Model.extend();
 
 var ImageView = Backbone.View.extend({
@@ -22,9 +22,8 @@ var ImageView = Backbone.View.extend({
     className: 'img-div',
     template: Handlebars.templates.image,
     render: function() {
-
         var html = Handlebars.templates.image(this.model.toJSON());
-        console.log('html:', html);
+        //console.log('html:', html);
         this.$el.html(html);
         return this.$el;
     }
