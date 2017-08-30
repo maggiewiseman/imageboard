@@ -19,7 +19,7 @@ var ImageView = Backbone.View.extend({
         this.render();
     },
     model: ImageModel,
-    className: 'img-div',
+    className: 'image-div',
     template: Handlebars.templates.image,
     render: function() {
 

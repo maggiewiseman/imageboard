@@ -59,7 +59,7 @@ app.get('/home', (req, res, next)=> {
         var images = {images: formatHomeJSON(results)};
         //console.log("images: ", images);
         //res.json(images);
-        res.json(formatHomeJSON(results));
+        res.json(results);
     }).catch(e => console.log(e.stack));
 });
 
