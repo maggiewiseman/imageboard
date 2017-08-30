@@ -133,13 +133,11 @@
             this.model.on('change', function() {
                 view.render();
             });
-            
+
         },
 
         render: function() {
-            console.log(Handlebars.templates);
-            console.log(this.model.toJSON());
-            console.log(this.model.get("imageData"));
+
             var data = Handlebars.templates.bigImage(this.model.toJSON());
             console.log('rendering: ', data);
             var html = (data);

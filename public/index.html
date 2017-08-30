@@ -51,14 +51,21 @@
         <div class="full-image-view">
             {{#each imageData}}
             <h1 class="title">{{this.title}}</h1>
-            <figure class="thumbnail">
-                <a href="/image" class="img-link"><img src="{{image}}" alt="{{description}}"></a>
+
+            <figure class="large-img">
+                <img src="{{image}}" alt="{{description}}">
             </figure>
-            <p class="likes"><a class=".heart" href="#"><i class="fa fa-heart-o"></i> {{#if this.likes}} {{this.likes}} this.likes {{/if}}</a></p>
-            <p class="posted-by"><span>Posted By: </span>{{username}}</p>
-            <p class="description">{{description}}</p>
+
+            <section class="image-info">
+                <p class="likes"><a class=".heart" href="#"><i class="fa fa-heart-o"></i> {{#if this.likes}} {{this.likes}} this.likes {{/if}}</a></p>
+                <p class="posted-by"><span>Posted By: </span>{{username}}</p>
+                <p class="description">{{description}}</p>
+            </section>
+
             {{/each}}
-            {{> commentList}}
+            <section class="comment-list">
+                {{> commentList}}
+            </section>
         </div>
     </template>
 
@@ -68,16 +75,17 @@
             <form class="comment-form" action="/comment/post" method="post">
                 <input type="text" placeholder="name" name="username">
                 <input type="textarea" placeholder="comment here" name="commentText">
-                <button type="submit" class="comment-btn">
+                <button type="submit" class="comment-btn">Add</button>
             </form>
         </div>
     </template>
 
     <template id="comments">
-        {{# each comments}}
-        <p class="username">{{username}}</p>
-        <p class="date">{{date}}</p>
-        <p class="comment-text">{{commenttext}}</p>
+
+        {{#each comments}}
+        <p class="posted_by">{{posted_by}}</p>
+        <p class="date">{{created_at}}</p>
+        <p class="comment-text" id="comment-{{id}}">{{comment}}</p>
         {{/each}}
     </template>
 
