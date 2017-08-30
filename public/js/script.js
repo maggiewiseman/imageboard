@@ -135,13 +135,25 @@
             });
 
         },
-
         render: function() {
-
             var data = Handlebars.templates.bigImage(this.model.toJSON());
             console.log('rendering: ', data);
             var html = (data);
             this.$el.html(html);
+        },
+        events: {
+            'submit #comment-form': function() {
+                var saveInfo = {
+                    posted_by: this.$el.find('input[name=posted_by]').val(),
+                    comment: this.$el.find('input[name=commentText]').val(),
+                    image_id: this.model.id
+                };
+                console.log('saveInfo', saveInfo);
+
+                this.model.set(saveInfo);
+                console.log('submitting new comment', this.model);
+                this.model.save();
+            }
         }
     });
 

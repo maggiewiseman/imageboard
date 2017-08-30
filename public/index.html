@@ -57,7 +57,7 @@
             </figure>
 
             <section class="image-info">
-                <p class="likes"><a class=".heart" href="#"><i class="fa fa-heart-o"></i> {{#if this.likes}} {{this.likes}} this.likes {{/if}}</a></p>
+                <p class="likes"><a class=".heart-{{id}}" href="#"><i class="fa fa-heart-o"></i> {{#if this.likes}} {{this.likes}} this.likes {{/if}}</a></p>
                 <p class="username"><span>Posted By: </span>{{username}}</p>
                 <p class="description">{{description}}</p>
             </section>
@@ -75,8 +75,8 @@
 
         <div class="post-a-comment">
             <h3>Add a comment</h3>
-            <form class="comment-form" action="/comment/post" method="post">
-                <input type="text" placeholder="Your name" name="username"><br>
+            <form method="post" id="comment-form">
+                <input type="text" placeholder="Your name" name="posted_by"><br>
                 <input type="textarea" placeholder="Comment here" name="commentText">
                 <button type="submit" class="comment-btn">Add</button>
             </form>

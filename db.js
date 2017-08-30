@@ -13,7 +13,7 @@ function dbQuery(query, data) {
     }
 
     if(query == 'saveImage') {
-        
+
         let queryStr = 'INSERT INTO images (image, username, title, description) VALUES ($1, $2, $3, $4);';
         return db.query(queryStr, data).then((result) => {
             console.log('DB save Images', result.rows);
@@ -38,12 +38,23 @@ function dbQuery(query, data) {
         let queryStr = 'SELECT * FROM comments WHERE image_id = $1';
         return db.query(queryStr, data);
     }
+
+    if(query =="addComment") {
+        console.log(`DBQUERY in ${query}, userData = `, data);
+        let queryStr = 'INSERT INTO comments (image_id, comment, posted_by) VALUES ($1, $2, $3)';
+        return db.query(queryStr, data);
+    }
 }
 
 
 module.exports.dbQuery = dbQuery;
 
 /*** Tests ***/
+// dbQuery('addComment', [2, 'practice comment', 'Lizzy Lizard']).then(()=> {
+//     console.log('done adding comment');
+// }).catch(e => console.error(e.stack));
+
+
 // dbQuery('getComments', [1]).then((results)=> {
 //     console.log('Test get image', results.rows);
 // }).catch(e => console.error(e.stack));

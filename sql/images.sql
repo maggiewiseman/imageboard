@@ -24,5 +24,12 @@ INSERT INTO images (image, username, title, description) VALUES ('x3hQUsyUdrUfU_
 INSERT INTO comments (image_id, posted_by, comment) VALUES ('1', 'Rocky Rhino', 'This image is amaze balls.');
 
 INSERT INTO comments (image_id, posted_by, comment) VALUES ('1', 'Gina Giraffe', 'I agree, this is totally rad.');
+
+-- SELECT images.title, images.description, images.username, comments.posted_by, comments.comment, comments.created_at
+-- FROM images
+-- LEFT JOIN comments
+-- ON images.id = comments.image_id
+-- WHERE images.id = 1
+-- ORDER BY comments.created_at DESC NULLS LAST;
 -- INSERT INTO images (image, username, title, description) VALUES ('wg8d94G_HrWdq7bU_2wT6Y6F3zrX-kej.jpg', 'discoduck', 'Elvis', 'We can''t go on together with suspicious minds.');
 -- INSERT INTO images (image, username, title, description) VALUES ('XCv4AwJdm6QuzjenFPKJocpipRNNMwze.jpg', 'discoduck', 'Hello Berlin', 'This is going to be worth a lot of money one day.');

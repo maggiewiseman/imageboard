@@ -60,7 +60,10 @@ app.get('/home', (req, res, next)=> {
         console.log("images: ", images);
         res.json(images);
         //res.json(results);
-    }).catch(e => console.log(e.stack));
+    }).catch(e => {
+        console.log(e.stack);
+        res.json({success:false});
+    });
 });
 
 app.post('/likes', (req, res, next) => {
@@ -105,8 +108,26 @@ app.get('/image/:id', (req, res, next) => {
 
             res.json(imageAndComments);
         });
-    }).catch(e => console.error(e.stack));
+    }).catch(e => {
+        console.log(e.stack);
+        res.json({success:false});
+    });
     //console.log('params', req.params.id);
+});
+
+app.put('/image/:id', (req, res, next)=> {
+    console.log('SERVER: req.body', req.body);
+    var data = [req.params.id, req.body.comment, req.body.posted_by];
+    return dbQ('addComment', data).then(()=> {
+        res.json({
+            success: true
+        });
+    }).catch(e => {
+        console.log(e.stack);
+        res.json({
+            success:false
+        });
+    });
 });
 
 app.listen(process.env.PORT || 8080, () => {
