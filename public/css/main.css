@@ -5,12 +5,13 @@
 
 body {
     font-family: 'Helvetica', serif;
-    background: rgba(255, 71, 87, 1);
+    /*background: rgba(255, 71, 87, 1);*/
+    /*background: rgba(110, 104, 104, 1);*/
 }
 nav {
     width: 100%;
     height: 50px;
-    background-color: gray;
+    background-color: rgba(166, 48, 109, 1);
     color: white;
 }
 
@@ -125,6 +126,7 @@ figure.thumbnail{
     width: 97%;
     background: rgba(255,255,255, 0.5);
     border-radius: 10px;
+    color: gray;
 
 }
 .full-image-view .title {
@@ -141,12 +143,13 @@ figure.thumbnail{
 
 .full-image-view img {
     width: 100%;
+    border-radius: 10px;
 }
 .full-image-view .image-info {
     margin: 20px 50px;
 }
 
-.full-image-view .posted-by,
+.full-image-view .username,
 .full-image-view .likes {
     display: inline;
     margin: 0 30px 0 0;
@@ -161,5 +164,49 @@ figure.thumbnail{
 .full-image-view p {
     font-size: 24px;
     margin: 8px 0;
+}
+/*** comment styles ***/
+.comment-div {
+    background: rgba(166, 48, 109, 0.32);
+    border-radius: 10px;
+    padding: 30px;
+    margin: 10px 50px;
+}
+.posted_by,
+.full-image-view .date {
+    color: rgba(166, 48, 109, 1);
+    display: inline;
+}
+
+.posted_by {
+    font-weight: bold;
+}
+.date {
+    float: right;
+}
+
+/*** comment form styles ***/
+.post-a-comment {
+    margin: 10px 50px;
+
+}
+
+.post-a-comment input {
+    font-size: 24px;
+    padding: 5px 8px;
+    margin: 10px 0;
+}
+
+.post-a-comment input[type="textarea"] {
+    width: 800px;
+    height: 40px;
+}
+
+.post-a-comment button {
+    font-size: 24px;
+    background-color: rgba(166, 48, 109, 1);
+    color: white;
+    border: none;
+    padding: 5px 8px;
 
 }

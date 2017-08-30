@@ -58,12 +58,13 @@
 
             <section class="image-info">
                 <p class="likes"><a class=".heart" href="#"><i class="fa fa-heart-o"></i> {{#if this.likes}} {{this.likes}} this.likes {{/if}}</a></p>
-                <p class="posted-by"><span>Posted By: </span>{{username}}</p>
+                <p class="username"><span>Posted By: </span>{{username}}</p>
                 <p class="description">{{description}}</p>
             </section>
 
             {{/each}}
             <section class="comment-list">
+
                 {{> commentList}}
             </section>
         </div>
@@ -71,10 +72,12 @@
 
     <template id="commentList">
         {{> comments}}
+
         <div class="post-a-comment">
+            <h3>Add a comment</h3>
             <form class="comment-form" action="/comment/post" method="post">
-                <input type="text" placeholder="name" name="username">
-                <input type="textarea" placeholder="comment here" name="commentText">
+                <input type="text" placeholder="Your name" name="username"><br>
+                <input type="textarea" placeholder="Comment here" name="commentText">
                 <button type="submit" class="comment-btn">Add</button>
             </form>
         </div>
@@ -83,10 +86,16 @@
     <template id="comments">
 
         {{#each comments}}
-        <p class="posted_by">{{posted_by}}</p>
-        <p class="date">{{created_at}}</p>
-        <p class="comment-text" id="comment-{{id}}">{{comment}}</p>
+        <div class="comment-div">
+            <div class="comment-info">
+                <p class="posted_by">{{posted_by}}</p>
+                <p class="date">{{created_at}}</p>
+            </div>
+            <p class="comment-text" id="comment-{{id}}">{{comment}}</p>
+    </div>
+
         {{/each}}
+
     </template>
 
     <template id="upload">
