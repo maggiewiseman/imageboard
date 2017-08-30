@@ -58,8 +58,8 @@ app.get('/home', (req, res, next)=> {
         //console.log('SERVER /home:', results);
         var images = {images: formatHomeJSON(results)};
         //console.log("images: ", images);
-        //res.json(images);
-        res.json(results);
+        res.json(images);
+        //res.json(results);
     }).catch(e => console.log(e.stack));
 });
 
@@ -89,6 +89,12 @@ app.post('/upload', uploader.single('file'), sendToAWS, function(req, res) {
             success: false
         });
     }
+});
+
+app.get('/image/:id', (req, res, next) => {
+    //I need to get the image information from the image table and join that with the comments
+
+    console.log('params', req.params.id);
 });
 
 app.listen(process.env.PORT || 8080, () => {
