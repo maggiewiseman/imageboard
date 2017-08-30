@@ -132,8 +132,8 @@
         routes: {
             '' : 'home',
             'home' : 'home',
-            'image' : 'image',
-            'upload': 'upload'
+            'upload': 'upload',
+            'image/:id': 'image'
         },
         upload: function() {
             $('#upload-section').off();
@@ -145,12 +145,16 @@
             });
         },
         home: function() {
+            console.log('home route');
             $('#main').off();
             $('#upload-section').hide();
             new BoardView({
                 el: '#main',
                 model: new BoardModel
             });
+        },
+        image: function(id) {
+            console.log('id is: ', id);
         }
     });
 

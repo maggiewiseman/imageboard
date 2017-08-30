@@ -95,11 +95,12 @@ app.get('/image/:id', (req, res, next) => {
     //I need to get the image information from the image table and join that with the comments
     var data = [req.params.id];
     return dbQ('getImage', data).then((imageData) => {
-
-        return dbQ('getComments').then((comments)=> {
+        console.log('imageData, ', imageData.rows);
+        return dbQ('getComments', data).then((comments)=> {
+            console.log('comments', comments.rows);
             var imageAndComments = {
-                imageData: formatHomeJSON(imageData),
-                comments: formatHomeJSON(comments)
+                imageData: formatHomeJSON(imageData.rows),
+                comments: formatHomeJSON(comments.rows)
             };
 
             res.json(imageAndComments);
