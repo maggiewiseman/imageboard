@@ -38,21 +38,46 @@ nav a {
 
 #upload-section {
     position:absolute;
+    border: 1px solid gray;
+    border-radius: 10px;
+    box-shadow: 2px 2px 2px 2px rgba(0,0,0, 0.1);
     top: 100px;
     left: 200px;
-    background: #363636;
-    width: 800px;
-    height: 400px;
+    background: white;
+    width: 600px;
+    height: 200px;
     display: none;
-    color: white;
-    font-size: 20px;
-    display: flex;
-    flex-flow: column;
-    align-items: center;
-    justify-content: space-around;
-    display: none;
+    color: #363636;
+    padding: 50px;
+
 }
 
+.upload-div input {
+    margin: 10px;
+}
+
+.upload-div .btn-grp {
+    display: block;
+    text-align: right;
+}
+
+.upload-div button {
+    padding: 10px;
+    color: white;
+    border: none;
+    font-size: 18px;
+}
+
+
+
+.upload-div button#upload-btn {
+    background-color: green;
+
+}
+
+.upload-div button#cancel-btn {
+    background-color: red;
+}
 
 
 #main {

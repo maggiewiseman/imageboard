@@ -105,12 +105,16 @@
     </template>
 
     <template id="upload">
-        <input type="text" placeholder="Title" name="title">
-        <input type="text" placeholder="Your name" name="username">
-        <input type="textarea" placeholder="Description" name="description">
-        <input type="file">
-        <button id="upload-btn">Upload</button>
-        <button id="cancel-btn">Cancel</button>
+        <div class="upload-div">
+            <input type="text" placeholder="Title" name="title">
+            <input type="text" placeholder="Your name" name="username">
+            <input type="textarea" placeholder="Description" name="description">
+            <input type="file">
+            <div class="btn-grp">
+                <button id="upload-btn">Upload</button>
+                <button id="cancel-btn">Cancel</button>
+            </div>
+        </div>
     </template>
 
     <script src="js/jquery-3.1.1.min.js" charset="utf-8"></script>
