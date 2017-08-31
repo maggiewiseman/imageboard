@@ -44,6 +44,12 @@ function dbQuery(query, data) {
         let queryStr = 'INSERT INTO comments (image_id, comment, posted_by) VALUES ($1, $2, $3)';
         return db.query(queryStr, data);
     }
+
+    if(query == "getLikes") {
+        console.log(`DBQUERY in ${query}, userData = `, data);
+        let queryStr = 'SELECT likes from images WHERE id = $1';
+        return db.query(queryStr, data);
+    }
 }
 
 

@@ -123,13 +123,14 @@
     });
 
     var BigImageView = Backbone.View.extend({
-        initialize: function(id) {
+        initialize: function() {
+            console.log('big image model. id = ', this.model.id);
             var view = this;
             this.views = [this];
             var likesView = new LikesView({
                 el: '#likes-sect',
                 model: new LikesModel({
-                    id: id
+                    id: this.model.id
                 })
             });
             this.views.push(likesView);
@@ -151,8 +152,11 @@
             //console.log('rendering: ', data);
             var html = (data);
             this.$el.html(html);
-            var $likes = this.$el.find('likes-sect');
-            $likes.append(this.views[1].model.toJSON());
+            var $likes = $('#likes-sect');
+            console.log('likes element: ', $likes);
+            console.log('rendering', this.views[1].render());
+            $likes.append(this.views[1].render());
+
         },
         addLike: function(e) {
             e.preventDefault();
@@ -197,8 +201,8 @@
 
     var LikesModel = Backbone.Model.extend({
         initialize: function(){
-            console.log('initializing Likes Model');
-            this.url = '/addLike/' + this.id;
+            console.log('initializing Likes Model with id: ', this.id);
+            this.url = '/likes/' + this.id;
             this.fetch();
         }
     });
@@ -212,10 +216,10 @@
                 view.render();
             });
         },
-        template: Handlebars.templates.bigLikes,
+        template: Handlebars.templates['likes-temp'],
         render: function() {
             console.log('in likes render function');
-            this.$el.html(this.template(this.model.toJSON()));
+            return this.template(this.model.toJSON());
         },
         addLike: function(e) {
             console.log(e);

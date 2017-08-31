@@ -66,15 +66,29 @@ app.get('/home', (req, res, next)=> {
     });
 });
 
-// app.put('/likes/:view', (req, res, next) => {
-//     return dbQ('updateLikes', data).then((results) => {
-//         console.log('view was: ', req.params.view);
-//         res.json({success:true});
-//     }).catch(e => {
-//         console.log(e.stack);
-//         res.json({success:false});
-//     });
-// });
+app.get('/likes/:id', (req, res, next)=> {
+    return dbQ('getLikes', [req.params.id]).then((results)=> {
+        res.json({
+            id: req.params.id,
+            likes: results.rows[0]
+        });
+    }).catch(e => {
+        console.log(e.stack);
+        res.json({success:false});
+    });
+});
+
+
+app.put('/likes/:id', (req, res, next) => {
+    var data = [req.params.id, req.body.likes];
+    return dbQ('updateLikes', data).then((results) => {
+        console.log('view was: ', req.params.view);
+        res.json({success:true});
+    }).catch(e => {
+        console.log(e.stack);
+        res.json({success:false});
+    });
+});
 
 app.post('/upload', uploader.single('file'), sendToAWS, function(req, res) {
     console.log('out of sendToAWS need to save to db');
