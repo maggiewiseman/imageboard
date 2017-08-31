@@ -18,12 +18,6 @@
 
         },
         url: '/home'
-        // addLike: function() {
-        //     var numLikes = this.model.get('likes');
-        //     this.model.set({likes : numLikes++ });
-        //     this.save();
-        // }
-
     });
 
     var BoardView = Backbone.View.extend({
@@ -42,16 +36,6 @@
             var html = Handlebars.templates.imageBoard(data);
             this.$el.html(html);
         },
-        // addLike: function(e) {
-        //     e.preventDefault();
-        //     console.log(e)
-        //     console.log('liked!', $(e.target.parentElement.parentElement.previousElementSibling.children[0].attributes[0]).val());
-        //
-        //     // var numLikes = this.model.get('likes');
-        //     // console.log(likes);
-        //     // this.model.set().save();
-        //
-        // }
     });
 
 
@@ -195,39 +179,23 @@
         },
         addLike: function(e) {
             e.preventDefault();
-            console.log('liked!', this.model.get('likes'));
-            var likes = this.model.get('likes').likes;
-            if(!likes) {
-                console.log('likes were null');
-                likes = 1;
+            if(localStorage.getItem('likedImage') == this.model.id) {
+                alert("You've already liked that image.");
             } else {
-                likes++;
+                console.log('liked!', this.model.get('likes'));
+                var likes = this.model.get('likes').likes;
+                if(!likes) {
+                    console.log('likes were null');
+                    likes = 1;
+                } else {
+                    likes++;
+                }
+                this.model.set({
+                    id: this.model.id,
+                    likes: likes
+                }).save();
+                localStorage.setItem('likedImage', this.model.id);
             }
-            this.model.set({
-                id: this.model.id,
-                likes: likes
-            }).save();
-            // console.log(e)
-            // console.log('big image liked!', e.currentTarget.id);
-            // var image_id = e.currentTarget.id.split('-')[1];
-            //
-            //
-
-            //
-            // console.log('likes', likes);
-            // this.model.set({
-            //     imageData: {
-            //         id: image_id,
-            //         likes: likes
-            //     }
-            // });
-            // console.log(this.model);
-            // this.model.save();
-
-            // var numLikes = this.model.get('likes');
-            // console.log(likes);
-            // this.model.set().save();
-
         },
         events: {
             'click .likes': 'addLike'
