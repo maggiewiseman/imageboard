@@ -96,42 +96,32 @@ app.post('/upload', uploader.single('file'), sendToAWS, function(req, res) {
 
 app.get('/image/:id', (req, res, next) => {
     //I need to get the image information from the image table and join that with the comments
-    var data = [req.params.id];
-    var promisArr = [];
-    promisArr.push(dbQ('getImage', data));
-    promisArr.push(dbQ('getComments', data));
-
-    return Promise.all(promisArr).then((results)=> {
-        //console.log(results);
-        var imageData = results[0];
-        var comments = results[1];
-
-        var imageAndComments = {
-            imageData: formatHomeJSON(imageData.rows),
-            comments: formatHomeJSON(comments.rows)
-        };
-
-        res.json(imageAndComments);
+    var id = [req.params.id];
+    return getImageAndComments(id).then((results) => {
+        res.json(results);
     }).catch((e) => {
         console.error(e.stack);
         res.json({success:false});
-    });
-    // return dbQ('getImage', data).then((imageData) => {
-    //     console.log('imageData, ', imageData.rows[0]);
-    //     return dbQ('getComments', data).then((comments)=> {
-    //         console.log('comments', comments.rows);
-    //         var imageAndComments = {
-    //             imageData: formatHomeJSON(imageData.rows),
-    //             comments: formatHomeJSON(comments.rows)
-    //         };
+    })
+    // var promisArr = [];
+    // promisArr.push(dbQ('getImage', data));
+    // promisArr.push(dbQ('getComments', data));
     //
-    //         res.json(imageAndComments);
-    //     });
-    // }).catch(e => {
-    //     console.log(e.stack);
+    // return Promise.all(promisArr).then((results)=> {
+    //     //console.log(results);
+    //     var imageData = results[0];
+    //     var comments = results[1];
+    //
+    //     var imageAndComments = {
+    //         imageData: formatHomeJSON(imageData.rows),
+    //         comments: formatHomeJSON(comments.rows)
+    //     };
+    //
+    //     res.json(imageAndComments);
+    // }).catch((e) => {
+    //     console.error(e.stack);
     //     res.json({success:false});
     // });
-    //console.log('params', req.params.id);
 });
 
 app.put('/image/:id', (req, res, next)=> {
@@ -153,6 +143,23 @@ app.listen(process.env.PORT || 8080, () => {
     console.log('listening on port 8080');
 });
 
+function getImageAndComments(id) {
+    var data = id;
+    var promisArr = [];
+    promisArr.push(dbQ('getImage', data));
+    promisArr.push(dbQ('getComments', data));
+
+    return Promise.all(promisArr).then((results)=> {
+        //console.log(results);
+        var imageData = results[0];
+        var comments = results[1];
+
+        var imageAndComments = {
+            imageData: formatHomeJSON(imageData.rows),
+            comments: formatHomeJSON(comments.rows)
+        };
+        return imageAndComments;
+});
 
 function formatHomeJSON(rows) {
     //this function is going to return a json object to send in the response
