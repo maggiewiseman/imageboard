@@ -102,35 +102,17 @@ app.get('/image/:id', (req, res, next) => {
     }).catch((e) => {
         console.error(e.stack);
         res.json({success:false});
-    })
-    // var promisArr = [];
-    // promisArr.push(dbQ('getImage', data));
-    // promisArr.push(dbQ('getComments', data));
-    //
-    // return Promise.all(promisArr).then((results)=> {
-    //     //console.log(results);
-    //     var imageData = results[0];
-    //     var comments = results[1];
-    //
-    //     var imageAndComments = {
-    //         imageData: formatHomeJSON(imageData.rows),
-    //         comments: formatHomeJSON(comments.rows)
-    //     };
-    //
-    //     res.json(imageAndComments);
-    // }).catch((e) => {
-    //     console.error(e.stack);
-    //     res.json({success:false});
-    // });
+    });
 });
 
 app.put('/image/:id', (req, res, next)=> {
     console.log('SERVER: req.body', req.body);
     var data = [req.params.id, req.body.comment, req.body.posted_by];
     return dbQ('addComment', data).then(()=> {
-        res.json({
-            success: true
-        });
+        return getImageAndComments([req.params.id]);
+    }).then((results) => {
+        console.log();
+        res.json(results);
     }).catch(e => {
         console.log(e.stack);
         res.json({
@@ -159,7 +141,8 @@ function getImageAndComments(id) {
             comments: formatHomeJSON(comments.rows)
         };
         return imageAndComments;
-});
+    });
+}
 
 function formatHomeJSON(rows) {
     //this function is going to return a json object to send in the response

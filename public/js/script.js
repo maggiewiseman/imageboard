@@ -133,18 +133,20 @@
             var view = this;
             this.model.on('change', function() {
                 console.log('in on change    event on BigImageView');
+                console.log(this.get('comments'));
                 view.render();
             });
             // this.model.on('sync', function() {
             //     console.log('in sync event');
             //     view.model.fetch();
             // });
-            this.listenTo(this.model, 'change', function(){
-                console.log('in listenTo event on BigImageView');
-                this.model.fetch();
-            });
+            // this.listenTo(this.model, 'change', function(){
+            //     console.log('in listenTo event on BigImageView');
+            //     this.model.fetch();
+            // });
         },
         render: function() {
+            console.log('rendering bigImage view');
             var data = Handlebars.templates.bigImage(this.model.toJSON());
             //console.log('rendering: ', data);
             var html = (data);

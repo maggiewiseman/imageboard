@@ -41,7 +41,7 @@ function dbQuery(query, data) {
 
     if(query =="addComment") {
         console.log(`DBQUERY in ${query}, userData = `, data);
-        let queryStr = 'INSERT INTO comments (image_id, comment, posted_by) VALUES ($1, $2, $3) RETURNING (SELECT * FROM comments WHERE image_id = $1)';
+        let queryStr = 'INSERT INTO comments (image_id, comment, posted_by) VALUES ($1, $2, $3)';
         return db.query(queryStr, data);
     }
 }
