@@ -123,7 +123,8 @@
             console.log('initializing BigImageModel', this.id);
             this.url = '/image/' + this.id;
             this.fetch();
-        }
+        },
+
     });
 
 
@@ -131,13 +132,21 @@
         initialize: function(id) {
             var view = this;
             this.model.on('change', function() {
+                console.log('in on change    event on BigImageView');
                 view.render();
             });
-
+            // this.model.on('sync', function() {
+            //     console.log('in sync event');
+            //     view.model.fetch();
+            // });
+            this.listenTo(this.model, 'change', function(){
+                console.log('in listenTo event on BigImageView');
+                this.model.fetch();
+            });
         },
         render: function() {
             var data = Handlebars.templates.bigImage(this.model.toJSON());
-            console.log('rendering: ', data);
+            //console.log('rendering: ', data);
             var html = (data);
             this.$el.html(html);
         },
@@ -148,10 +157,7 @@
                     comment: this.$el.find('input[name=commentText]').val(),
                     image_id: this.model.id
                 };
-                console.log('saveInfo', saveInfo);
-
                 this.model.set(saveInfo);
-                console.log('submitting new comment', this.model);
                 this.model.save();
             }
         }
