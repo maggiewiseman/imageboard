@@ -97,21 +97,40 @@ app.post('/upload', uploader.single('file'), sendToAWS, function(req, res) {
 app.get('/image/:id', (req, res, next) => {
     //I need to get the image information from the image table and join that with the comments
     var data = [req.params.id];
-    return dbQ('getImage', data).then((imageData) => {
-        console.log('imageData, ', imageData.rows[0]);
-        return dbQ('getComments', data).then((comments)=> {
-            console.log('comments', comments.rows);
-            var imageAndComments = {
-                imageData: formatHomeJSON(imageData.rows),
-                comments: formatHomeJSON(comments.rows)
-            };
+    var promisArr = [];
+    promisArr.push(dbQ('getImage', data));
+    promisArr.push(dbQ('getComments', data));
 
-            res.json(imageAndComments);
-        });
-    }).catch(e => {
-        console.log(e.stack);
+    return Promise.all(promisArr).then((results)=> {
+        //console.log(results);
+        var imageData = results[0];
+        var comments = results[1];
+
+        var imageAndComments = {
+            imageData: formatHomeJSON(imageData.rows),
+            comments: formatHomeJSON(comments.rows)
+        };
+
+        res.json(imageAndComments);
+    }).catch((e) => {
+        console.error(e.stack);
         res.json({success:false});
     });
+    // return dbQ('getImage', data).then((imageData) => {
+    //     console.log('imageData, ', imageData.rows[0]);
+    //     return dbQ('getComments', data).then((comments)=> {
+    //         console.log('comments', comments.rows);
+    //         var imageAndComments = {
+    //             imageData: formatHomeJSON(imageData.rows),
+    //             comments: formatHomeJSON(comments.rows)
+    //         };
+    //
+    //         res.json(imageAndComments);
+    //     });
+    // }).catch(e => {
+    //     console.log(e.stack);
+    //     res.json({success:false});
+    // });
     //console.log('params', req.params.id);
 });
 
