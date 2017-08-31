@@ -11,11 +11,11 @@ const app = express();
 
 app.use(express.static(__dirname + '/public'));
 
-app.use(bodyParser.urlencoded({
-    extended: false
-}));
+// app.use(bodyParser.urlencoded({
+//     extended: false
+// }));
 
-//app.use(bodyParser.json);
+app.use(bodyParser.json({strict: false}));
 
 /********** Knox Shenanigans ****************/
 const knox = require('knox');
