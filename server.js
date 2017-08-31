@@ -80,6 +80,7 @@ app.get('/likes/:id', (req, res, next)=> {
 
 
 app.put('/likes/:id', (req, res, next) => {
+    console.log('put likes route:' req.body);
     var data = [req.params.id, req.body.likes];
     return dbQ('updateLikes', data).then((results) => {
         console.log('view was: ', req.params.view);

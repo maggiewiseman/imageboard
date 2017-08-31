@@ -42,16 +42,16 @@
             var html = Handlebars.templates.imageBoard(data);
             this.$el.html(html);
         },
-        addLike: function(e) {
-            e.preventDefault();
-            console.log(e)
-            console.log('liked!', $(e.target.parentElement.parentElement.previousElementSibling.children[0].attributes[0]).val());
-
-            // var numLikes = this.model.get('likes');
-            // console.log(likes);
-            // this.model.set().save();
-
-        }
+        // addLike: function(e) {
+        //     e.preventDefault();
+        //     console.log(e)
+        //     console.log('liked!', $(e.target.parentElement.parentElement.previousElementSibling.children[0].attributes[0]).val());
+        //
+        //     // var numLikes = this.model.get('likes');
+        //     // console.log(likes);
+        //     // this.model.set().save();
+        //
+        // }
     });
 
 
@@ -153,9 +153,9 @@
             var html = (data);
             this.$el.html(html);
             var $likes = $('#likes-sect');
-            console.log('likes element: ', $likes);
-            console.log('rendering', this.views[1].render());
-            $likes.append(this.views[1].render());
+            // this.task_selection_view.setElement(this.$('#selection')).render();
+            this.views[1].setElement(this.$('#likes-sect')).render();
+        //    $likes.append(this.views[1].render());
 
         },
         addLike: function(e) {
@@ -219,13 +219,16 @@
         template: Handlebars.templates['likes-temp'],
         render: function() {
             console.log('in likes render function');
-            return this.template(this.model.toJSON());
+            this.$el.html(this.template(this.model.toJSON()));
+            return this;
+            // this.template(this.model.toJSON());
         },
         addLike: function(e) {
-            console.log(e);
+            e.preventDefault();
+            console.log('liked!', e);
         },
         events: {
-            'click .heart': 'addLike'
+            'click .likes': 'addLike'
         }
     });
 
