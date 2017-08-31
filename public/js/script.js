@@ -153,38 +153,8 @@
             var html = (data);
             this.$el.html(html);
             var $likes = $('#likes-sect');
-            // this.task_selection_view.setElement(this.$('#selection')).render();
+            //must use setElement to set subview otherwise events on the subview (the likes view, in this case) get removed
             this.views[1].setElement(this.$('#likes-sect')).render();
-        //    $likes.append(this.views[1].render());
-
-        },
-        addLike: function(e) {
-            e.preventDefault();
-            // console.log(e)
-            // console.log('big image liked!', e.currentTarget.id);
-            // var image_id = e.currentTarget.id.split('-')[1];
-            // var likes = this.model.get('likes');
-            //
-            // if(!likes) {
-            //     likes = 1;
-            // } else {
-            //     likes++;
-            // }
-            //
-            // console.log('likes', likes);
-            // this.model.set({
-            //     imageData: {
-            //         id: image_id,
-            //         likes: likes
-            //     }
-            // });
-            // console.log(this.model);
-            // this.model.save();
-
-            // var numLikes = this.model.get('likes');
-            // console.log(likes);
-            // this.model.set().save();
-
         },
         events: {
             'submit #comment-form': function() {
@@ -225,7 +195,39 @@
         },
         addLike: function(e) {
             e.preventDefault();
-            console.log('liked!', e);
+            console.log('liked!', this.model.get('likes'));
+            var likes = this.model.get('likes').likes;
+            if(!likes) {
+                console.log('likes were null');
+                likes = 1;
+            } else {
+                likes++;
+            }
+            this.model.set({
+                id: this.model.id,
+                likes: likes
+            }).save();
+            // console.log(e)
+            // console.log('big image liked!', e.currentTarget.id);
+            // var image_id = e.currentTarget.id.split('-')[1];
+            //
+            //
+
+            //
+            // console.log('likes', likes);
+            // this.model.set({
+            //     imageData: {
+            //         id: image_id,
+            //         likes: likes
+            //     }
+            // });
+            // console.log(this.model);
+            // this.model.save();
+
+            // var numLikes = this.model.get('likes');
+            // console.log(likes);
+            // this.model.set().save();
+
         },
         events: {
             'click .likes': 'addLike'

@@ -80,11 +80,15 @@ app.get('/likes/:id', (req, res, next)=> {
 
 
 app.put('/likes/:id', (req, res, next) => {
-    console.log('put likes route:' req.body);
+    console.log('put likes route:', req.body);
     var data = [req.params.id, req.body.likes];
-    return dbQ('updateLikes', data).then((results) => {
-        console.log('view was: ', req.params.view);
-        res.json({success:true});
+    return dbQ('updateLikes', data).then(()=>{
+        return dbQ('getLikes', [req.params.id]);
+    }).then((results) => {
+        res.json({
+            id: req.params.id,
+            likes: results.rows[0]
+        });
     }).catch(e => {
         console.log(e.stack);
         res.json({success:false});
