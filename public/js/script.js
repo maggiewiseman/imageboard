@@ -147,7 +147,13 @@
         },
         render: function() {
             console.log('rendering bigImage view');
-            var data = Handlebars.templates.bigImage(this.model.toJSON());
+            var jsonModel = this.model.toJSON();
+            var goodDateModel = jsonModel.comments.map(function(comment) {
+                comment.created_at = new Date(comment.created_at);
+                return comment;
+            });
+            console.log(goodDateModel);
+            var data = Handlebars.templates.bigImage(jsonModel);
             //console.log('rendering: ', data);
             var html = (data);
             this.$el.html(html);
