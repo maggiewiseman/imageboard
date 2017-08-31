@@ -51,9 +51,6 @@
             // console.log(likes);
             // this.model.set().save();
 
-        },
-        events: {
-            'click .board-heart': 'addLike'
         }
     });
 
@@ -125,34 +122,60 @@
 
     });
 
-
     var BigImageView = Backbone.View.extend({
         initialize: function(id) {
             var view = this;
+            this.views = [this];
+            var likesView = new LikesView({
+                el: '#likes-sect',
+                model: new LikesModel({
+                    id: id
+                })
+            });
+            this.views.push(likesView);
+
             this.model.on('change', function() {
-                console.log('in on change    event on BigImageView');
-                console.log(this.get('comments'));
-                view.render();
+                console.log('in on change event on BigImageView');
+                view.views[0].render();
             });
         },
         render: function() {
             console.log('rendering bigImage view');
             var jsonModel = this.model.toJSON();
-            var goodDateModel = jsonModel.comments.map(function(comment) {
+            jsonModel.comments.map(function(comment) {
                 comment.created_at = new Date(comment.created_at);
                 return comment;
             });
-            console.log(goodDateModel);
+            //console.log(goodDateModel);
             var data = Handlebars.templates.bigImage(jsonModel);
             //console.log('rendering: ', data);
             var html = (data);
             this.$el.html(html);
+            var $likes = this.$el.find('likes-sect');
+            $likes.append(this.views[1].model.toJSON());
         },
         addLike: function(e) {
             e.preventDefault();
-            console.log(e)
-            console.log('big image liked!', $(e.target));
-
+            // console.log(e)
+            // console.log('big image liked!', e.currentTarget.id);
+            // var image_id = e.currentTarget.id.split('-')[1];
+            // var likes = this.model.get('likes');
+            //
+            // if(!likes) {
+            //     likes = 1;
+            // } else {
+            //     likes++;
+            // }
+            //
+            // console.log('likes', likes);
+            // this.model.set({
+            //     imageData: {
+            //         id: image_id,
+            //         likes: likes
+            //     }
+            // });
+            // console.log(this.model);
+            // this.model.save();
 
             // var numLikes = this.model.get('likes');
             // console.log(likes);
@@ -168,8 +191,37 @@
                 };
                 this.model.set(saveInfo);
                 this.model.save();
-            },
-            'click .bigImage-heart': 'addLike'
+            }
+        }
+    });
+
+    var LikesModel = Backbone.Model.extend({
+        initialize: function(){
+            console.log('initializing Likes Model');
+            this.url = '/addLike/' + this.id;
+            this.fetch();
+        }
+    });
+
+    var LikesView = Backbone.View.extend({
+        initialize: function(id){
+            console.log('initialize likesView');
+            var view = this;
+            this.model.on('change', function() {
+                console.log('in on change event on likes view');
+                view.render();
+            });
+        },
+        template: Handlebars.templates.bigLikes,
+        render: function() {
+            console.log('in likes render function');
+            this.$el.html(this.template(this.model.toJSON()));
+        },
+        addLike: function(e) {
+            console.log(e);
+        },
+        events: {
+            'click .heart': 'addLike'
         }
     });
 

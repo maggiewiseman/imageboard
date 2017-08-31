@@ -57,7 +57,9 @@
             </figure>
 
             <section class="image-info">
-                <p class="likes"><a id="heart-{{id}}" class="bigImage-heart" href="#"><i class="fa fa-heart-o"></i> {{#if this.likes}} {{this.likes}} this.likes {{/if}}</a></p>
+                <section id="likes-sect">
+                    <!-- <p class="likes"><a id="heart-{{id}}" class="bigImage-heart" href="#"><i class="fa fa-heart-o"></i>  {{likes}} likes </a></p> -->
+                </section>
                 <p class="username"><span>Posted By: </span>{{username}}</p>
                 <p class="description">{{description}}</p>
             </section>
@@ -68,6 +70,10 @@
                 {{> commentList}}
             </section>
         </div>
+    </template>
+
+    <template id="likes-temp">
+        <p class="likes"><a id="heart-{{id}}" class="heart" href="#"><i class="fa fa-heart-o"></i>  {{likes}} likes </a></p>
     </template>
 
     <template id="commentList">
