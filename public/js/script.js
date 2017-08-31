@@ -53,7 +53,7 @@
 
         },
         events: {
-            'click .heart': 'addLike'
+            'click .board-heart': 'addLike'
         }
     });
 
@@ -76,7 +76,6 @@
                 processData: false,
                 contentType: false,
                 success: function() {
-                    //console.log('successful upload', this);
                     model.trigger('uploadSuccess');
                 }
             });
@@ -92,7 +91,6 @@
         },
         render: function() {
             var html = Handlebars.templates.upload();
-            //console.log(html);
             this.$el.html(html);
         },
         events: {
@@ -136,14 +134,6 @@
                 console.log(this.get('comments'));
                 view.render();
             });
-            // this.model.on('sync', function() {
-            //     console.log('in sync event');
-            //     view.model.fetch();
-            // });
-            // this.listenTo(this.model, 'change', function(){
-            //     console.log('in listenTo event on BigImageView');
-            //     this.model.fetch();
-            // });
         },
         render: function() {
             console.log('rendering bigImage view');
@@ -158,6 +148,17 @@
             var html = (data);
             this.$el.html(html);
         },
+        addLike: function(e) {
+            e.preventDefault();
+            console.log(e)
+            console.log('big image liked!', $(e.target));
+
+
+            // var numLikes = this.model.get('likes');
+            // console.log(likes);
+            // this.model.set().save();
+
+        },
         events: {
             'submit #comment-form': function() {
                 var saveInfo = {
@@ -167,7 +168,8 @@
                 };
                 this.model.set(saveInfo);
                 this.model.save();
-            }
+            },
+            'click .bigImage-heart': 'addLike'
         }
     });
 

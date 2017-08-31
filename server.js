@@ -66,9 +66,15 @@ app.get('/home', (req, res, next)=> {
     });
 });
 
-app.post('/likes', (req, res, next) => {
-
-});
+// app.put('/likes/:view', (req, res, next) => {
+//     return dbQ('updateLikes', data).then((results) => {
+//         console.log('view was: ', req.params.view);
+//         res.json({success:true});
+//     }).catch(e => {
+//         console.log(e.stack);
+//         res.json({success:false});
+//     });
+// });
 
 app.post('/upload', uploader.single('file'), sendToAWS, function(req, res) {
     console.log('out of sendToAWS need to save to db');

@@ -27,7 +27,7 @@
             <figure class="thumbnail">
                 <a href="/#image/{{id}}" class="img-link" id="image-{{id}}"><img src="{{image}}" alt="{{description}}"></a>
             </figure>
-            <p class="likes"><a  id="heart-{{id}}"class="heart" href="#"><i class="fa fa-heart-o"></i> {{#if likes}} {{likes}} likes {{/if}}</a></p>
+            <p class="likes"><a  id="heart-{{id}}" class="board-heart" href="#"><i class="fa fa-heart-o"></i> {{#if likes}} {{likes}} likes {{/if}}</a></p>
             <p class="posted-by"><span>Posted By: </span>{{username}}</p>
             <p class="description">{{description}}</p>
         </div>
@@ -41,7 +41,7 @@
             <figure class="thumbnail">
                 <a href="/image" class="img-link"><img src="{{image}}" alt="{{description}}"></a>
             </figure>
-            <p class="likes"><a class=".heart" href="#"><i class="fa fa-heart-o"></i> {{#if likes}} {{likes}} likes {{/if}}</a></p>
+            <p class="likes"><a class="heart" href="#" id="heart-{{id}}"><i class="fa fa-heart-o"></i> {{#if likes}} {{likes}} likes {{/if}}</a></p>
             <p class="posted-by"><span>Posted By: </span>{{username}}</p>
             <p class="description">{{description}}</p>
         <!-- </div> -->
@@ -57,7 +57,7 @@
             </figure>
 
             <section class="image-info">
-                <p class="likes"><a class=".heart-{{id}}" href="#"><i class="fa fa-heart-o"></i> {{#if this.likes}} {{this.likes}} this.likes {{/if}}</a></p>
+                <p class="likes"><a id="heart-{{id}}" class="bigImage-heart" href="#"><i class="fa fa-heart-o"></i> {{#if this.likes}} {{this.likes}} this.likes {{/if}}</a></p>
                 <p class="username"><span>Posted By: </span>{{username}}</p>
                 <p class="description">{{description}}</p>
             </section>

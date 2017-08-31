@@ -1,5 +1,5 @@
-DROP TABLE IF EXISTS images;
 DROP TABLE IF EXISTS comments;
+DROP TABLE IF EXISTS images;
 
 CREATE TABLE images(
     id SERIAL PRIMARY KEY,
@@ -19,11 +19,11 @@ CREATE TABLE comments (
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
-INSERT INTO images (image, username, title, description) VALUES ('x3hQUsyUdrUfU_g_SvUKw_jt93j6LWMf.png', 'funkychicken', 'Backbone Tutorial', 'Screenshot of backbone tutorial');
-
-INSERT INTO comments (image_id, posted_by, comment) VALUES ('1', 'Rocky Rhino', 'This image is amaze balls.');
-
-INSERT INTO comments (image_id, posted_by, comment) VALUES ('1', 'Gina Giraffe', 'I agree, this is totally rad.');
+-- INSERT INTO images (image, username, title, description) VALUES ('x3hQUsyUdrUfU_g_SvUKw_jt93j6LWMf.png', 'funkychicken', 'Backbone Tutorial', 'Screenshot of backbone tutorial');
+--
+-- INSERT INTO comments (image_id, posted_by, comment) VALUES ('1', 'Rocky Rhino', 'This image is amaze balls.');
+--
+-- INSERT INTO comments (image_id, posted_by, comment) VALUES ('1', 'Gina Giraffe', 'I agree, this is totally rad.');
 
 -- SELECT images.title, images.description, images.username, comments.posted_by, comments.comment, comments.created_at
 -- FROM images
