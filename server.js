@@ -54,13 +54,42 @@ var uploader = multer({
 });
 
 /********** Actual Routes **************/
+// app.get('/home/:page', (req, res, next)=> {
+//     const numPages = req.params.page-1;
+//     const data = [6, 6*numPages];
+//     return dbQ('getSomeImages', data).then((results)=> {
+//         console.log('SERVER /home:', results);
+//         res.json({images: formatHomeJSON(results)});
+//         //res.json(results);
+//     }).catch(e => {
+//         console.log(e.stack);
+//         res.json({success:false});
+//     });
+// });
 app.get('/home/:page', (req, res, next)=> {
     const numPages = req.params.page-1;
     const data = [6, 6*numPages];
-    return dbQ('getSomeImages', data).then((results)=> {
-        //console.log('SERVER /home:', results);
-        res.json({images: formatHomeJSON(results)});
-        //res.json(results);
+
+    var promiseArr = [];
+    promiseArr.push(dbQ('getSomeImages', data));
+    promiseArr.push(dbQ('getNumImages'));
+
+    return Promise.all(promiseArr).then((results)=> {
+        console.log('results:', results[1]);
+        var images = results[0];
+        console.log('imageData = ', images);
+
+        var count = results[1][0].count;
+        var showNext = true;
+        if(req.params.page * 6 >= count){
+            showNext = false;
+        }
+
+        var imageAndComments = {
+            images: formatHomeJSON(images),
+            showNext: showNext
+        };
+        res.json(imageAndComments);
     }).catch(e => {
         console.log(e.stack);
         res.json({success:false});

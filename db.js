@@ -12,6 +12,14 @@ function dbQuery(query, data) {
         });
     }
 
+    if(query == 'getNumImages') {
+        let queryStr = 'SELECT COUNT(*) from images';
+        return db.query(queryStr).then((result) => {
+            console.log(`DB ${query}`, result.rows);
+            return result.rows;
+        });
+    }
+
     if(query == 'getSomeImages') {
         let queryStr = 'SELECT * from images ORDER BY created_at DESC LIMIT $1 OFFSET $2';
         return db.query(queryStr, data).then((result) => {

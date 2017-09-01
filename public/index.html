@@ -34,7 +34,8 @@
             </div>
             {{/each}}
         </div>
-        <a href="/#home/{{nextPage}}" id="next-btn" class="a-btn">Next <i class="fa fa-arrow-right"></i></a>
+        {{#if showNext}}<a href="/#home/{{nextPage}}" id="next-btn" class="a-btn">Next <i class="fa fa-arrow-right"></i></a>
+        {{/if}}
     </template>
 
     <template id="image">
