@@ -53,7 +53,8 @@ nav a {
 #upload-section header {
     height: 50px;
     background:  rgba(166, 48, 109, 1);
-
+    border-top-right-radius: 8px;
+    border-top-left-radius: 8px;
 }
 
 #upload-section h2 {
