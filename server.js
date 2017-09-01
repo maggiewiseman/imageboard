@@ -56,7 +56,10 @@ var uploader = multer({
 app.get('/home', (req, res, next)=> {
     return dbQ('getAllImages').then((results)=> {
         //console.log('SERVER /home:', results);
-        var images = {images: formatHomeJSON(results)};
+        var images = {
+            imageNum: 0,
+            images: formatHomeJSON(results)
+        };
         console.log("images: ", images);
         res.json(images);
         //res.json(results);

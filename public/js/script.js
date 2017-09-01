@@ -9,13 +9,13 @@
 
     Handlebars.partials = Handlebars.templates;
 
-    //make model
+    /************* BOARD MODEL AND VIEW ******************/
+
     var BoardModel = Backbone.Model.extend({
         initialize: function() {
             this.fetch();
             console.log('initializing after fetch');
             console.log(this);
-
         },
         url: '/home'
     });
@@ -25,8 +25,9 @@
             console.log('initializing board view');
             var view = this;
             this.model.on('change', function() {
-                console.log('change event happened');
+                console.log('change event happened', this);
                 view.render();
+
             });
         },
         render: function() {
@@ -39,7 +40,7 @@
     });
 
 
-    /************* UPLOAD ******************/
+    /************* UPLOAD MODEL AND VIEW ******************/
     var UploadModel = Backbone.Model.extend({
         save: function() {
             var model = this;
@@ -96,7 +97,7 @@
         }
     });
 
-    /*********** BIG IMAGE MODEL AND ROUTER ****************/
+    /*********** BIG IMAGE MODEL AND VIEW ****************/
     var BigImageModel = Backbone.Model.extend({
         initialize: function() {
             console.log('initializing BigImageModel', this.id);
@@ -153,6 +154,7 @@
         }
     });
 
+    /*********** LIKES MODEL AND VIEW ****************/
     var LikesModel = Backbone.Model.extend({
         initialize: function(){
             console.log('initializing Likes Model with id: ', this.id);
