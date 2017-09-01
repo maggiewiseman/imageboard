@@ -12,6 +12,14 @@ function dbQuery(query, data) {
         });
     }
 
+    if(query == 'getSomeImages') {
+        let queryStr = 'SELECT * from images ORDER BY created_at DESC LIMIT $1 OFFSET $2';
+        return db.query(queryStr, data).then((result) => {
+            console.log('DB getAllImages', result.rows);
+            return result.rows;
+        });
+    }
+
     if(query == 'saveImage') {
 
         let queryStr = 'INSERT INTO images (image, username, title, description) VALUES ($1, $2, $3, $4);';
@@ -55,7 +63,11 @@ function dbQuery(query, data) {
 
 module.exports.dbQuery = dbQuery;
 
-/*** Tests ***/
+// /*** Tests ***/
+// dbQuery('getSomeImages', [6, 6]).then((results)=> {
+//     console.log('Test getSomeimage', results);
+// }).catch(e => console.error(e.stack));
+
 // dbQuery('addComment', [2, 'practice comment', 'Lizzy Lizard']).then(()=> {
 //     console.log('done adding comment');
 // }).catch(e => console.error(e.stack));

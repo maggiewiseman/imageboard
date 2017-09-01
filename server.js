@@ -54,6 +54,19 @@ var uploader = multer({
 });
 
 /********** Actual Routes **************/
+app.get('/home/:page', (req, res, next)=> {
+    const numPages = req.params.page - 1;
+    const data = [6, 6*numPages];
+    return dbQ('getSomeImages', data).then((results)=> {
+        //console.log('SERVER /home:', results);
+        res.json({images: formatHomeJSON(results)});
+        //res.json(results);
+    }).catch(e => {
+        console.log(e.stack);
+        res.json({success:false});
+    });
+});
+
 app.get('/home', (req, res, next)=> {
     const thisUrl = url.parse(req.url);
     console.log('query params', thisUrl);
@@ -65,15 +78,10 @@ app.get('/home', (req, res, next)=> {
   path: '/home?limit=6&offset=1',
   href: '/home?limit=6&offset=1' }
     */
+
     return dbQ('getAllImages').then((results)=> {
         //console.log('SERVER /home:', results);
-
-        var images = {
-            imageNum: 0,
-            images: formatHomeJSON(results)
-        };
-        console.log("images: ", images);
-        res.json(images);
+        res.json({images: formatHomeJSON(results)});
         //res.json(results);
     }).catch(e => {
         console.log(e.stack);
