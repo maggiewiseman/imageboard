@@ -13,6 +13,12 @@
 
     var BoardModel = Backbone.Model.extend({
         initialize: function() {
+            var imageNum = 1;
+            if(this.get('imageNum')){
+                imageNum = this.get('imageNum');
+            }
+
+            this.url = '/home?limit=6&offset=' + imageNum;
             this.fetch();
             console.log('initializing after fetch');
             console.log(this);

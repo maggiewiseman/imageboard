@@ -5,7 +5,7 @@ const db = spicedPg(`postgres:${secrets.dbUser}:${secrets.pass}@localhost:5432/i
 
 function dbQuery(query, data) {
     if(query == 'getAllImages') {
-        let queryStr = 'SELECT * from images ORDER BY created_at DESC';
+        let queryStr = 'SELECT * from images ORDER BY created_at DESC LIMIT 6';
         return db.query(queryStr).then((result) => {
             console.log('DB getAllImages', result.rows);
             return result.rows;

@@ -6,6 +6,7 @@ const multer = require('multer');
 const uidSafe = require('uid-safe');
 const path = require('path');
 const fs = require('fs');
+const url = require('url');
 
 const app = express();
 
@@ -54,8 +55,19 @@ var uploader = multer({
 
 /********** Actual Routes **************/
 app.get('/home', (req, res, next)=> {
+    const thisUrl = url.parse(req.url);
+    console.log('query params', thisUrl);
+    /*
+    query params Url {
+  search: '?limit=6&offset=1',
+  query: 'limit=6&offset=1',
+  pathname: '/home',
+  path: '/home?limit=6&offset=1',
+  href: '/home?limit=6&offset=1' }
+    */
     return dbQ('getAllImages').then((results)=> {
         //console.log('SERVER /home:', results);
+
         var images = {
             imageNum: 0,
             images: formatHomeJSON(results)
