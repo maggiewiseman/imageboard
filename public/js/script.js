@@ -14,7 +14,6 @@
     var BoardModel = Backbone.Model.extend({
         initialize: function() {
             console.log('page num', this.get('page'));
-
             this.url = '/home/' + this.get('page');
             this.fetch();
             console.log('initializing after fetch');
@@ -40,6 +39,12 @@
             var html = Handlebars.templates.imageBoard(data);
             this.$el.html(html);
         },
+        events: {
+            'click #next-btn': function() {
+                var currentPage = this.model.get('page');
+                this.model.set({page: currentPage++}).save();
+            }
+        }
     });
 
 
@@ -229,7 +234,7 @@
         home: function(page) {
 
             if(!page) {
-                page = 1;
+                page = 0;
                 console.log('page undefined, but now it is:', page);
             }
 
