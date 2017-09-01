@@ -13,12 +13,9 @@
 
     var BoardModel = Backbone.Model.extend({
         initialize: function() {
-            var imageNum = 1;
-            if(this.get('imageNum')){
-                imageNum = this.get('imageNum');
-            }
+            console.log('page num', this.get('page'));
 
-            this.url = '/home?limit=6&offset=' + imageNum;
+            this.url = '/home/' + this.get('page');
             this.fetch();
             console.log('initializing after fetch');
             console.log(this);
@@ -214,9 +211,11 @@
     var Router = Backbone.Router.extend({
         routes: {
             '' : 'home',
-            'home' : 'home',
+            'home': 'home',
+            'home/:page' : 'home',
             'upload': 'upload',
             'image/:id': 'image'
+
         },
         upload: function() {
             $('#upload-section').off();
@@ -227,13 +226,19 @@
                 model: new UploadModel
             });
         },
-        home: function() {
+        home: function(page) {
+
+            if(!page) {
+                page = 1;
+                console.log('page undefined, but now it is:', page);
+            }
+
             console.log('home route');
             $('#main').off();
             $('#upload-section').hide();
             new BoardView({
                 el: '#main',
-                model: new BoardModel
+                model: new BoardModel({page:page})
             });
         },
         image: function(id) {
