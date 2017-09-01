@@ -104,7 +104,7 @@ nav a {
 }
 
 
-#main {
+.board {
     margin-top: 50px;
     display: flex;
     flex-flow: row wrap;
