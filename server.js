@@ -55,7 +55,7 @@ var uploader = multer({
 
 /********** Actual Routes **************/
 app.get('/home/:page', (req, res, next)=> {
-    const numPages = req.params.page;
+    const numPages = req.params.page-1;
     const data = [6, 6*numPages];
     return dbQ('getSomeImages', data).then((results)=> {
         //console.log('SERVER /home:', results);

@@ -13,13 +13,11 @@
 
     var BoardModel = Backbone.Model.extend({
         initialize: function() {
-            console.log('page num', this.get('page'));
-            this.url = '/home/' + this.get('page');
+            console.log('page num', this.get('nextPage'));
+            this.url = '/home/' + this.get('nextPage');
             this.fetch();
-            console.log('initializing after fetch');
-            console.log(this);
-        },
-        url: '/home'
+            console.log('in intialize model: this model: ', this);
+        }
     });
 
     var BoardView = Backbone.View.extend({
@@ -31,6 +29,9 @@
                 view.render();
 
             });
+            this.model.on('change:page', function() {
+                console.log('page changed');
+            });
         },
         render: function() {
             //console.log('views render function called');
@@ -41,8 +42,11 @@
         },
         events: {
             'click #next-btn': function() {
-                var currentPage = this.model.get('page');
-                this.model.set({page: currentPage++}).save();
+                var currentPage = this.model.get('nextPage');
+
+                this.model.set({page: currentPage++});
+                console.log(this.model);
+                this.model.save();
             }
         }
     });
@@ -234,8 +238,10 @@
         home: function(page) {
 
             if(!page) {
-                page = 0;
+                page = 1;
                 console.log('page undefined, but now it is:', page);
+            } else {
+                page++;
             }
 
             console.log('home route');
@@ -243,7 +249,7 @@
             $('#upload-section').hide();
             new BoardView({
                 el: '#main',
-                model: new BoardModel({page:page})
+                model: new BoardModel({nextPage:page})
             });
         },
         image: function(id) {
