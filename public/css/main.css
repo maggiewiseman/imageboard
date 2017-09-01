@@ -32,6 +32,18 @@ nav a {
 
 }
 
+#main {
+    text-align: right;
+
+}
+#next-btn {
+    text-decoration: none;
+    color: white;
+    background: rgba(110, 104, 104, 1);
+    padding: 10px;
+    margin-right: 40px;
+}
+
 .fa {
     padding-right: 6px;
 }
@@ -132,6 +144,7 @@ nav a {
     font-size: 14px;
     color: gray;
     padding-bottom: 20px;
+    height: 40px;
 }
 
 figure.thumbnail{
