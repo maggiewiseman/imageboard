@@ -20,6 +20,6 @@ An app that allows users to upload images, comment, and like images.
 <img src="https://raw.githubusercontent.com/maggiewiseman/imageboard/master/assets/screenshots/pagination.png" alt="shows a single image with a next button below it." width="400px"/>
 
 * Clicking on an image shows a a full size image and allows users to make comments and/or like the image. 
-<img src="https://raw.githubusercontent.com/maggiewiseman/imageboard/master/assets/screenshots/comments.png" alt="Shows part of a larger image with comments." width="400px"/>
+<img src="https://raw.githubusercontent.com/maggiewiseman/imageboard/master/assets/screenshots/comments.png" alt="Shows part of a larger image with comments." width="800px"/>
 
 * There is no login so keeping track of likes is done by setting a cookie. 
