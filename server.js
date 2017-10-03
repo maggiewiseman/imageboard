@@ -18,19 +18,19 @@ app.use(express.static(__dirname + '/public'));
 
 app.use(bodyParser.json({strict: false}));
 
-/********** Knox Shenanigans ****************/
-const knox = require('knox');
-let secrets;
-if (process.env.NODE_ENV == 'production') {
-    secrets = process.env; // in prod the secrets are environment variables
-} else {
-    secrets = require('./secrets'); // secrets.json is in .gitignore
-}
-const client = knox.createClient({
-    key: secrets.AWS_KEY,
-    secret: secrets.AWS_SECRET,
-    bucket: 'maggiesgingerimageboard'
-});
+    /********** Knox Shenanigans ****************/
+    const knox = require('knox');
+    let secrets;
+    if (process.env.NODE_ENV == 'production') {
+        secrets = process.env; // in prod the secrets are environment variables
+    } else {
+        secrets = require('./secrets'); // secrets.json is in .gitignore
+    }
+    const client = knox.createClient({
+        key: secrets.AWS_KEY,
+        secret: secrets.AWS_SECRET,
+        bucket: 'maggiesgingerimageboard'
+    });
 
 /********** Multer File Upload Shenanigans **************/
 var diskStorage = multer.diskStorage({
